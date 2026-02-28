@@ -273,6 +273,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff-b);font-size:15
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:rgba(200,169,110,.22);border-radius:999px}
 ::-webkit-scrollbar-thumb:hover{background:rgba(200,169,110,.42)}
+
+/* BACKUP PAGE */
+.bk-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.4rem 1.5rem;margin-bottom:1.1rem;transition:var(--tr)}
+.bk-card:hover{border-color:rgba(200,169,110,.18)}
+.bk-card__head{display:flex;align-items:flex-start;gap:1rem}
+.bk-card__icon{width:44px;height:44px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.bk-card__title{font-family:var(--ff-d);font-size:1rem;font-weight:600;margin-bottom:.25rem}
+.bk-card__desc{font-size:.8rem;color:var(--muted);line-height:1.5}
+.import-row{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-sm);padding:.55rem .85rem;display:flex;align-items:center;gap:.75rem;font-size:.82rem}
+.import-row .cnt{background:rgba(200,169,110,.12);color:var(--gold);border-radius:999px;padding:.1rem .55rem;font-size:.73rem;font-weight:700}
 </style>
 </head>
 <body>
@@ -298,6 +308,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff-b);font-size:15
       <li><button id="n-add"     onclick="nav('add')"><i class="fa-solid fa-plus"></i> Kitap Ekle</button></li>
       <li><button id="n-stats"   onclick="nav('stats')"><i class="fa-solid fa-chart-simple"></i> İstatistikler</button></li>
       <li><button id="n-timeline" onclick="nav('timeline')"><i class="fa-solid fa-timeline"></i> Aktiviteler</button></li>
+      <li><button id="n-backup" onclick="nav('backup')"><i class="fa-solid fa-database"></i> Yedekleme</button></li>
     </ul>
     <div class="sb-label">Durum Filtresi</div>
     <ul class="sb-nav">
@@ -374,6 +385,101 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff-b);font-size:15
 
         <!-- RESULT -->
         <div id="scan-result"></div>
+      </div>
+    </section>
+
+    <!-- ===== YEDEKLEME ===== -->
+    <section id="p-backup" class="page">
+      <div style="max-width:700px">
+        <h2 style="font-family:var(--ff-d);font-size:1.5rem;color:var(--gold);margin-bottom:.3rem"><i class="fa-solid fa-database"></i> Yedekleme & Dışa Aktarma</h2>
+        <p style="color:var(--muted);font-size:.84rem;margin-bottom:2rem">Kitaplığınızı Excel'e aktarın, JSON yedek alın veya yedekten geri yükleyin.</p>
+
+        <!-- EXCEL -->
+        <div class="bk-card">
+          <div class="bk-card__head">
+            <div class="bk-card__icon ic-green"><i class="fa-solid fa-file-excel"></i></div>
+            <div>
+              <div class="bk-card__title">Excel'e Aktar (.xlsx)</div>
+              <div class="bk-card__desc">Tüm kitap listenizi biçimlendirilmiş Excel dosyasına aktarın.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem">
+            <button class="btn-g" onclick="exportExcel()"><i class="fa-solid fa-download"></i> Excel İndir</button>
+            <button class="btn-b" onclick="exportCSV()"><i class="fa-solid fa-file-csv"></i> CSV İndir</button>
+          </div>
+        </div>
+
+        <!-- JSON BACKUP -->
+        <div class="bk-card">
+          <div class="bk-card__head">
+            <div class="bk-card__icon ic-blue"><i class="fa-solid fa-file-code"></i></div>
+            <div>
+              <div class="bk-card__title">JSON Yedek Al</div>
+              <div class="bk-card__desc">Tüm kitapları ve aktivite geçmişini tek bir JSON dosyasına kaydedin. Geri yüklemek için kullanabilirsiniz.</div>
+            </div>
+          </div>
+          <div style="margin-top:1rem">
+            <button class="btn-g" onclick="exportJSON()"><i class="fa-solid fa-download"></i> JSON Yedeği İndir</button>
+          </div>
+        </div>
+
+        <!-- JSON RESTORE -->
+        <div class="bk-card">
+          <div class="bk-card__head">
+            <div class="bk-card__icon ic-yellow"><i class="fa-solid fa-upload"></i></div>
+            <div>
+              <div class="bk-card__title">Yedekten Geri Yükle / Toplu İçe Aktar</div>
+              <div class="bk-card__desc">JSON yedek dosyasını veya Excel/CSV'yi seçin. Mevcut kitaplara eklenebilir ya da tamamen değiştirilebilir.</div>
+            </div>
+          </div>
+          <div style="margin-top:1rem;display:flex;flex-direction:column;gap:.75rem">
+            <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center">
+              <label class="btn-b" style="cursor:pointer"><i class="fa-solid fa-folder-open"></i> Dosya Seç
+                <input type="file" id="importFile" accept=".json,.xlsx,.csv" style="display:none" onchange="importFile(this)"/>
+              </label>
+              <span id="importFileName" style="font-size:.82rem;color:var(--muted)">Dosya seçilmedi</span>
+            </div>
+            <div id="importPreview" style="display:none">
+              <div style="background:var(--bg);border-radius:var(--r-md);padding:1rem;margin-bottom:.75rem">
+                <div style="font-size:.82rem;color:var(--muted);margin-bottom:.5rem">Önizleme:</div>
+                <div id="importPreviewContent"></div>
+              </div>
+              <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+                <button class="btn-g" onclick="doImport('merge')"><i class="fa-solid fa-code-merge"></i> Ekleyerek Aktar (mevcut korunur)</button>
+                <button class="btn-r" onclick="doImport('replace')"><i class="fa-solid fa-rotate"></i> Silerek Aktar (sıfırdan)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXCEL TOPLU ŞABLON -->
+        <div class="bk-card">
+          <div class="bk-card__head">
+            <div class="bk-card__icon ic-gold"><i class="fa-solid fa-table-columns"></i></div>
+            <div>
+              <div class="bk-card__title">Toplu Kitap Ekleme Şablonu</div>
+              <div class="bk-card__desc">Boş Excel şablonunu indirin, doldurun ve içe aktarın.</div>
+            </div>
+          </div>
+          <div style="margin-top:1rem">
+            <button class="btn-b" onclick="downloadTemplate()"><i class="fa-solid fa-download"></i> Boş Şablon İndir</button>
+          </div>
+        </div>
+
+        <!-- DANGER ZONE -->
+        <div class="bk-card" style="border-color:rgba(224,92,92,.2)">
+          <div class="bk-card__head">
+            <div class="bk-card__icon" style="background:rgba(224,92,92,.12);color:var(--red)"><i class="fa-solid fa-skull"></i></div>
+            <div>
+              <div class="bk-card__title" style="color:var(--red)">Tehlikeli Bölge</div>
+              <div class="bk-card__desc">Tüm verileri kalıcı olarak sil. Geri alınamaz!</div>
+            </div>
+          </div>
+          <div style="margin-top:1rem">
+            <button class="btn-r" onclick="nukAll()"><i class="fa-solid fa-trash"></i> Tüm Verileri Sil</button>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -499,6 +605,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff-b);font-size:15
 
 <!-- Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<!-- SheetJS – Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script>
 /* ============================================================
@@ -586,6 +694,7 @@ function nav(page){
   if(page==='library')  renderLib();
   if(page==='stats')    renderStats();
   if(page==='timeline') renderTimeline();
+  if(page==='backup'){/* static page */}
 }
 
 function setView(v){
@@ -1084,6 +1193,284 @@ function fillForm(j){
   document.getElementById('fStatus').value=book.status||'toread';
   document.getElementById('fGenre').value=book.genre||'';
   document.getElementById('fCover').value=book.coverUrl||'';
+}
+
+
+/* ============================================================
+   EXCEL & BACKUP MODULE
+   ============================================================ */
+
+// ── Sütun tanımları
+const COLS = [
+  {key:'title',      label:'Kitap Adı',     width:35},
+  {key:'author',     label:'Yazar',          width:25},
+  {key:'isbn',       label:'ISBN',           width:18},
+  {key:'publisher',  label:'Yayınevi',       width:22},
+  {key:'year',       label:'Yıl',            width:8},
+  {key:'pages',      label:'Sayfa Sayısı',   width:14},
+  {key:'genre',      label:'Tür',            width:18},
+  {key:'status',     label:'Durum',          width:14},
+  {key:'rating',     label:'Puan (1-5)',      width:12},
+  {key:'notes',      label:'Notlar',         width:40},
+  {key:'coverUrl',   label:'Kapak URL',      width:40},
+  {key:'addedAt',    label:'Eklenme Tarihi', width:20},
+];
+
+const STATUS_TR = {reading:'Okunuyor',read:'Okundu',toread:'Okunacak',paused:'Bırakıldı'};
+
+// ── Excel Export
+function exportExcel(){
+  const books = DB.getBooks();
+  if(!books.length){ toast('Kitaplık boş.','warning'); return; }
+  if(typeof XLSX==='undefined'){ toast('Excel kütüphanesi yüklenemedi.','error'); return; }
+
+  const wb = XLSX.utils.book_new();
+
+  // ── Ana kitap sayfası
+  const rows = [COLS.map(c=>c.label)];
+  books.forEach(b=>{
+    rows.push(COLS.map(c=>{
+      if(c.key==='status') return STATUS_TR[b[c.key]]||b[c.key]||'';
+      if(c.key==='addedAt') return b[c.key]?new Date(b[c.key]).toLocaleDateString('tr-TR'):'';
+      if(c.key==='rating') return b[c.key]||0;
+      return b[c.key]||'';
+    }));
+  });
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+
+  // Sütun genişlikleri
+  ws['!cols'] = COLS.map(c=>({wch:c.width}));
+
+  // Header satırı stili (XLSX CE destekler)
+  const hdrRange = XLSX.utils.decode_range(ws['!ref']);
+  for(let C=hdrRange.s.c; C<=hdrRange.e.c; C++){
+    const addr = XLSX.utils.encode_cell({r:0,c:C});
+    if(!ws[addr]) continue;
+    ws[addr].s = {
+      font:{bold:true,color:{rgb:'1A1A2E'}},
+      fill:{fgColor:{rgb:'C8A96E'}},
+      alignment:{horizontal:'center',vertical:'center'},
+      border:{bottom:{style:'thin',color:{rgb:'888888'}}}
+    };
+  }
+
+  // Donmuş satır (başlık sabit)
+  ws['!freeze'] = {xSplit:0, ySplit:1};
+
+  XLSX.utils.book_append_sheet(wb, ws, 'Kitaplık');
+
+  // ── İstatistik sayfası
+  const bk = DB.getBooks();
+  const statRows = [
+    ['İstatistik','Değer'],
+    ['Toplam Kitap', bk.length],
+    ['Okunuyor', bk.filter(b=>b.status==='reading').length],
+    ['Okundu', bk.filter(b=>b.status==='read').length],
+    ['Okunacak', bk.filter(b=>b.status==='toread').length],
+    ['Bırakıldı', bk.filter(b=>b.status==='paused').length],
+    ['Toplam Sayfa', bk.reduce((s,b)=>s+(parseInt(b.pages)||0),0)],
+    ['Ortalama Puan', (()=>{ const r=bk.filter(b=>b.rating>0); return r.length?(r.reduce((s,b)=>s+b.rating,0)/r.length).toFixed(2):'-'; })()],
+    ['İhracat Tarihi', new Date().toLocaleDateString('tr-TR')],
+  ];
+  const wsStats = XLSX.utils.aoa_to_sheet(statRows);
+  wsStats['!cols']=[{wch:22},{wch:16}];
+  XLSX.utils.book_append_sheet(wb, wsStats, 'İstatistikler');
+
+  XLSX.writeFile(wb, `Biblios_Kutuphane_${_today()}.xlsx`);
+  toast('Excel dosyası indirildi!','success');
+}
+
+// ── CSV Export
+function exportCSV(){
+  const books = DB.getBooks();
+  if(!books.length){ toast('Kitaplık boş.','warning'); return; }
+  const head = COLS.map(c=>'"'+c.label+'"').join(',');
+  const rows = books.map(b=>COLS.map(c=>{
+    let v=b[c.key]||'';
+    if(c.key==='status') v=STATUS_TR[b[c.key]]||b[c.key]||'';
+    if(c.key==='addedAt') v=b[c.key]?new Date(b[c.key]).toLocaleDateString('tr-TR'):'';
+    return '"'+String(v).replace(/"/g,'""')+'"';
+  }).join(',')).join('\n');
+  _dlText(`\uFEFF${head}\n${rows}`, `Biblios_${_today()}.csv`, 'text/csv;charset=utf-8');
+  toast('CSV indirildi!','success');
+}
+
+// ── JSON Export (tam yedek)
+function exportJSON(){
+  const payload = {
+    version: 2,
+    exportedAt: new Date().toISOString(),
+    books: DB.getBooks(),
+    events: DB.getEvents()
+  };
+  _dlText(JSON.stringify(payload,null,2), `Biblios_Yedek_${_today()}.json`, 'application/json');
+  toast('JSON yedek indirildi!','success');
+}
+
+// ── Şablon
+function downloadTemplate(){
+  if(typeof XLSX==='undefined'){ toast('Excel kütüphanesi yüklenemedi.','error'); return; }
+  const wb = XLSX.utils.book_new();
+  const rows = [COLS.map(c=>c.label),
+    ['Örnek Kitap','Örnek Yazar','9789750718976','Can Yayınları','2023','320','Roman','Okunacak','4','Harika bir kitap.','','']
+  ];
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = COLS.map(c=>({wch:c.width}));
+  XLSX.utils.book_append_sheet(wb, ws, 'Kitaplar');
+  XLSX.writeFile(wb, 'Biblios_Sablon.xlsx');
+  toast('Şablon indirildi! Doldurup içe aktarabilirsiniz.','info');
+}
+
+// ── Dosya seç → Önizleme
+let _importData = null;
+
+function importFile(input){
+  const file = input.files[0];
+  if(!file) return;
+  document.getElementById('importFileName').textContent = file.name;
+  const ext = file.name.split('.').pop().toLowerCase();
+
+  if(ext==='json'){
+    const reader = new FileReader();
+    reader.onload = e => {
+      try{
+        const d = JSON.parse(e.target.result);
+        // Desteklenen formatlar: {books:[...]}, {version,books:[...]}, direkt dizi
+        const books = Array.isArray(d) ? d : (d.books||[]);
+        const events = d.events||[];
+        _importData = {books, events, source:'json'};
+        showImportPreview(books, events);
+      }catch{ toast('Geçersiz JSON dosyası.','error'); }
+    };
+    reader.readAsText(file);
+  } else if(ext==='xlsx'||ext==='xls'){
+    if(typeof XLSX==='undefined'){ toast('Excel kütüphanesi yüklenemedi.','error'); return; }
+    const reader = new FileReader();
+    reader.onload = e => {
+      try{
+        const wb = XLSX.read(e.target.result, {type:'binary'});
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:''});
+        _importData = {books: parseExcelRows(rows), events:[], source:'excel'};
+        showImportPreview(_importData.books, []);
+      }catch(err){ toast('Excel okunamadı: '+(err.message||err),'error'); }
+    };
+    reader.readAsBinaryString(file);
+  } else if(ext==='csv'){
+    const reader = new FileReader();
+    reader.onload = e => {
+      try{
+        const rows = e.target.result.replace(/^\uFEFF/,'').split('\n').map(r=>r.split(',').map(v=>v.replace(/^"|"$/g,'').replace(/""/g,'"')));
+        _importData = {books: parseExcelRows(rows), events:[], source:'csv'};
+        showImportPreview(_importData.books, []);
+      }catch(err){ toast('CSV okunamadı.','error'); }
+    };
+    reader.readAsText(file,'UTF-8');
+  } else {
+    toast('Desteklenmeyen format. JSON, XLSX veya CSV seçin.','error');
+  }
+}
+
+function parseExcelRows(rows){
+  if(rows.length < 2) return [];
+  const headerRow = rows[0].map(h=>String(h).trim().toLowerCase());
+  // Başlık eşlemesi (Türkçe + İngilizce)
+  const map = {
+    'kitap adı':'title','title':'title','başlık':'title',
+    'yazar':'author','author':'author',
+    'isbn':'isbn',
+    'yayınevi':'publisher','publisher':'publisher','yayinevi':'publisher',
+    'yıl':'year','year':'year','yil':'year',
+    'sayfa sayısı':'pages','pages':'pages','sayfa':'pages',
+    'tür':'genre','genre':'genre','tur':'genre','kategori':'genre',
+    'durum':'status','status':'status',
+    'puan (1-5)':'rating','puan':'rating','rating':'rating',
+    'notlar':'notes','notes':'notes',
+    'kapak url':'coverUrl','cover url':'coverUrl','coverurl':'coverUrl',
+    'eklenme tarihi':'addedAt',
+  };
+  const STATUS_EN = {'okunuyor':'reading','okundu':'read','okunacak':'toread','bırakıldı':'paused','reading':'reading','read':'read','toread':'toread','paused':'paused'};
+  return rows.slice(1).filter(r=>r.some(v=>v!=='')).map(r=>{
+    const obj = {};
+    headerRow.forEach((h,i)=>{ const k=map[h]; if(k) obj[k]=String(r[i]||'').trim(); });
+    if(!obj.title) return null;
+    if(obj.status) obj.status = STATUS_EN[obj.status.toLowerCase()]||'toread';
+    else obj.status = 'toread';
+    if(obj.rating) obj.rating = parseInt(obj.rating)||0; else obj.rating=0;
+    if(!obj.id) obj.id = uid();
+    if(!obj.addedAt||!obj.addedAt.includes('T')) obj.addedAt = new Date().toISOString();
+    return obj;
+  }).filter(Boolean);
+}
+
+function showImportPreview(books, events){
+  if(!books.length){ toast('Dosyada kitap bulunamadı.','warning'); return; }
+  document.getElementById('importPreview').style.display='block';
+  document.getElementById('importPreviewContent').innerHTML=`
+    <div class="import-row"><i class="fa-solid fa-book" style="color:var(--gold)"></i> <span>${books.length} kitap bulundu</span> <span class="cnt">${books.length}</span></div>
+    ${events.length?`<div class="import-row" style="margin-top:.4rem"><i class="fa-solid fa-clock-rotate-left" style="color:var(--blue)"></i> <span>${events.length} aktivite kaydı bulundu</span> <span class="cnt">${events.length}</span></div>`:''}
+    <div style="margin-top:.75rem;display:flex;flex-direction:column;gap:.3rem;max-height:160px;overflow-y:auto">
+      ${books.slice(0,8).map(b=>`<div style="font-size:.78rem;color:var(--text);padding:.25rem 0;border-bottom:1px solid var(--border)"><i class="fa-solid fa-book" style="color:var(--muted);width:14px"></i> ${esc(b.title)} <span style="color:var(--muted)">– ${esc(b.author||'?')}</span></div>`).join('')}
+      ${books.length>8?`<div style="font-size:.75rem;color:var(--muted);padding:.25rem 0">…ve ${books.length-8} kitap daha</div>`:''}
+    </div>`;
+}
+
+function doImport(mode){
+  if(!_importData||!_importData.books.length){ toast('Önce dosya seçin.','warning'); return; }
+  const {books, events} = _importData;
+
+  if(mode==='replace'){
+    if(!confirm(`DİKKAT: Mevcut ${DB.getBooks().length} kitap silinecek ve ${books.length} yeni kitap yüklenecek. Emin misiniz?`)) return;
+    localStorage.setItem('biblios_v3', JSON.stringify(books));
+    if(events.length) localStorage.setItem('biblios_events_v1', JSON.stringify(events));
+    toast(`${books.length} kitap yüklendi (sıfırdan).`,'success');
+  } else {
+    // Merge – ISBN veya ID ile duplicate kontrol
+    const existing = DB.getBooks();
+    let added=0, skipped=0;
+    books.forEach(nb=>{
+      // ID veya ISBN ile çakışma kontrolü
+      const dupId  = existing.find(b=>b.id===nb.id);
+      const dupIsbn= nb.isbn?existing.find(b=>b.isbn&&b.isbn.replace(/[-\s]/g,'')===nb.isbn.replace(/[-\s]/g,'')):null;
+      if(dupId||dupIsbn){ skipped++; return; }
+      if(!nb.id) nb.id=uid();
+      if(!nb.addedAt) nb.addedAt=new Date().toISOString();
+      existing.push(nb); added++;
+    });
+    localStorage.setItem('biblios_v3', JSON.stringify(existing));
+    if(events.length){
+      const existingEvs = DB.getEvents();
+      const merged = [...events.filter(e=>!existingEvs.find(x=>x.id===e.id)), ...existingEvs];
+      localStorage.setItem('biblios_events_v1', JSON.stringify(merged));
+    }
+    toast(`${added} kitap eklendi${skipped?' ('+skipped+' zaten mevcut, atlandı)':''}.`,'success');
+  }
+
+  // Temizle
+  _importData=null;
+  document.getElementById('importPreview').style.display='none';
+  document.getElementById('importFileName').textContent='Dosya seçilmedi';
+  document.getElementById('importFile').value='';
+  updateHeader();
+}
+
+// ── Tüm veri sil
+function nukAll(){
+  if(!confirm('TÜM kitaplar ve aktivite geçmişi silinecek! Bu işlem geri alınamaz. Devam edilsin mi?')) return;
+  localStorage.removeItem('biblios_v3');
+  localStorage.removeItem('biblios_events_v1');
+  toast('Tüm veriler silindi.','success');
+  updateHeader();
+  renderLib();
+}
+
+// ── Yardımcılar
+function _today(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function _dlText(content,filename,mime){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([content],{type:mime}));
+  a.download=filename; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),5000);
 }
 
 /* ============================================================
