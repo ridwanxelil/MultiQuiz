@@ -741,6 +741,256 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 /* Safe area padding for bottom nav screens */
 .has-bottom-nav { padding-bottom: calc(66px + env(safe-area-inset-bottom, 0)); }
 
+
+/* ===== PROFILE DETAIL SCREEN ===== */
+#screen-profile-detail {
+  padding-top: 0;
+}
+
+.profile-detail-hero {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(79,142,247,0.15), rgba(168,85,247,0.15));
+  border-radius: 0 0 28px 28px;
+  padding: 24px 20px 28px;
+  text-align: center;
+  margin-bottom: 16px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-avatar {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.detail-name {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.8rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.detail-joined {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.detail-back-btn {
+  position: absolute;
+  top: 14px; left: 14px;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text);
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.detail-edit-btn {
+  position: absolute;
+  top: 14px; right: 14px;
+  background: rgba(79,142,247,0.2);
+  border: 1px solid rgba(79,142,247,0.3);
+  color: var(--blue);
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.detail-delete-btn {
+  position: absolute;
+  top: 14px; right: 80px;
+  background: rgba(233,69,96,0.15);
+  border: 1px solid rgba(233,69,96,0.3);
+  color: var(--accent);
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.detail-quick-stats {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 14px;
+}
+
+.dqs {
+  text-align: center;
+}
+
+.dqs-val {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.5rem;
+  display: block;
+}
+
+.dqs-lbl {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+/* MINI CHART in profile detail */
+.mini-chart-wrap {
+  width: 100%;
+}
+
+.score-line-chart {
+  width: 100%;
+  height: 120px;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.score-line-chart svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.chart-grid-line {
+  stroke: var(--border);
+  stroke-width: 1;
+  stroke-dasharray: 4,4;
+}
+
+.chart-area {
+  fill: rgba(79,142,247,0.12);
+}
+
+.chart-line {
+  fill: none;
+  stroke: var(--blue);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chart-dot {
+  fill: var(--blue);
+  stroke: var(--card);
+  stroke-width: 2;
+}
+
+.chart-dot.perfect { fill: var(--gold); }
+
+/* Profile card new style */
+.profile-card-actions {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: var(--card2);
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 16px 16px;
+  display: none;
+  justify-content: space-around;
+  padding: 6px;
+}
+
+.profile-card:hover .profile-card-actions { display: flex; }
+
+.pca-btn {
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.15s;
+}
+
+.pca-btn.edit { color: var(--blue); }
+.pca-btn.edit:hover { background: rgba(79,142,247,0.15); }
+.pca-btn.del { color: var(--accent); }
+.pca-btn.del:hover { background: rgba(233,69,96,0.15); }
+.pca-btn.view { color: var(--green); }
+.pca-btn.view:hover { background: rgba(15,196,126,0.15); }
+
+/* EDIT PROFILE MODAL */
+.color-opts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.color-opt { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: all 0.15s; }
+.color-opt.selected { border-color: white; transform: scale(1.15); }
+
+/* Donut chart */
+.donut-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 8px;
+}
+
+.donut-chart {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+}
+
+.donut-chart svg {
+  transform: rotate(-90deg);
+}
+
+.donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.donut-pct {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.4rem;
+  color: var(--text);
+  line-height: 1;
+}
+
+.donut-lbl {
+  font-size: 0.6rem;
+  color: var(--muted);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.donut-legend { display: flex; flex-direction: column; gap: 6px; }
+.dl-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; }
+.dl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* Recent exams in detail */
+.recent-exam-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 14px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.recent-exam-item:hover { border-color: var(--blue); }
+
+.rei-left .rei-topic { font-size: 0.78rem; font-weight: 800; color: var(--text2); margin-bottom: 2px; }
+.rei-left .rei-date { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--muted); }
+.rei-right { display: flex; align-items: center; gap: 8px; }
+.rei-pct { font-family: 'Fredoka One', sans-serif; font-size: 1.2rem; }
+
 /* QUESTION COUNT BADGE */
 .remaining-badge {
   font-family: 'Space Mono', monospace;
@@ -780,6 +1030,120 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     </div>
     <div class="profile-grid" id="profile-grid"></div>
     <button class="btn btn-ghost btn-full mt8" onclick="openSettingsFromProfile()">⚙️ Ebeveyn Ayarları</button>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!--  SCREEN: PROFILE DETAIL                                       -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-profile-detail">
+  <div style="width:100%;max-width:640px;padding:0 0 20px;">
+
+    <!-- HERO -->
+    <div class="profile-detail-hero">
+      <button class="detail-back-btn" onclick="gotoScreen('profiles')">←</button>
+      <button class="detail-delete-btn" id="detail-delete-btn" onclick="deleteCurrentProfile()">🗑️</button>
+      <button class="detail-edit-btn" onclick="editCurrentProfile()">✏️ Düzenle</button>
+      <span class="detail-avatar" id="detail-avatar">🦊</span>
+      <div class="detail-name" id="detail-name">Ahmet</div>
+      <div class="detail-joined" id="detail-joined"></div>
+      <div class="detail-quick-stats">
+        <div class="dqs"><span class="dqs-val" id="dqs-total" style="color:var(--blue)">0</span><span class="dqs-lbl">Soru</span></div>
+        <div class="dqs"><span class="dqs-val" id="dqs-exams" style="color:var(--purple)">0</span><span class="dqs-lbl">Sınav</span></div>
+        <div class="dqs"><span class="dqs-val" id="dqs-best" style="color:var(--gold)">—</span><span class="dqs-lbl">En İyi</span></div>
+        <div class="dqs"><span class="dqs-val" id="dqs-streak" style="color:var(--orange)">0🔥</span><span class="dqs-lbl">Seri</span></div>
+      </div>
+    </div>
+
+    <div style="padding:0 16px">
+
+      <!-- SCORE LINE CHART -->
+      <div class="card card-accent mb12">
+        <div class="section-title mb12">📈 Son 10 Sınav Başarısı</div>
+        <div class="mini-chart-wrap">
+          <div class="score-line-chart">
+            <svg id="score-svg" viewBox="0 0 300 100" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#4f8ef7" stop-opacity="0.4"/>
+                  <stop offset="100%" stop-color="#4f8ef7" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <line class="chart-grid-line" x1="0" y1="25" x2="300" y2="25"/>
+              <line class="chart-grid-line" x1="0" y1="50" x2="300" y2="50"/>
+              <line class="chart-grid-line" x1="0" y1="75" x2="300" y2="75"/>
+              <text x="305" y="28" font-size="8" fill="var(--muted)">75</text>
+              <text x="305" y="53" font-size="8" fill="var(--muted)">50</text>
+              <text x="305" y="78" font-size="8" fill="var(--muted)">25</text>
+              <path id="chart-area" class="chart-area" d=""/>
+              <path id="chart-line" class="chart-line" d=""/>
+              <g id="chart-dots"></g>
+            </svg>
+          </div>
+          <div id="chart-no-data" style="text-align:center;color:var(--muted);padding:20px;font-weight:700;display:none">Henüz sınav yok</div>
+        </div>
+      </div>
+
+      <!-- DONUT CHART: Doğru / Yanlış -->
+      <div class="card card-accent mb12">
+        <div class="section-title mb12">🎯 Genel Başarı</div>
+        <div class="donut-wrap">
+          <div class="donut-chart">
+            <svg viewBox="0 0 36 36" width="100" height="100">
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--border)" stroke-width="4"/>
+              <circle id="donut-correct-arc" cx="18" cy="18" r="15.9" fill="none" stroke="var(--green)" stroke-width="4" stroke-dasharray="0 100" stroke-linecap="round"/>
+              <circle id="donut-wrong-arc" cx="18" cy="18" r="15.9" fill="none" stroke="var(--accent)" stroke-width="4" stroke-dasharray="0 100" stroke-linecap="round" stroke-dashoffset="0"/>
+            </svg>
+            <div class="donut-center">
+              <span class="donut-pct" id="donut-pct">—</span>
+              <span class="donut-lbl">başarı</span>
+            </div>
+          </div>
+          <div class="donut-legend">
+            <div class="dl-item"><div class="dl-dot" style="background:var(--green)"></div><span id="dl-correct">0 Doğru</span></div>
+            <div class="dl-item"><div class="dl-dot" style="background:var(--accent)"></div><span id="dl-wrong">0 Yanlış</span></div>
+            <div class="dl-item"><div class="dl-dot" style="background:var(--gold)"></div><span id="dl-streak">0 Max Seri</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOPIC BARS -->
+      <div class="card card-accent mb12">
+        <div class="section-title mb12">📚 Konu Bazlı Başarı</div>
+        <div id="detail-topic-bars"></div>
+      </div>
+
+      <!-- WEEKLY ACTIVITY -->
+      <div class="card card-accent mb12">
+        <div class="section-title mb12">📅 Haftalık Aktivite</div>
+        <div class="weekly-chart">
+          <div class="chart-bars" id="detail-weekly-bars"></div>
+          <div style="display:flex;gap:6px;margin-top:4px" id="detail-weekly-days"></div>
+        </div>
+      </div>
+
+      <!-- RECENT EXAMS -->
+      <div class="card card-accent mb12">
+        <div class="section-title mb12">🕒 Son Sınavlar</div>
+        <div id="detail-recent-exams"></div>
+      </div>
+
+      <!-- WEAK POINTS -->
+      <div class="card card-accent mb12">
+        <div class="section-title mb12">🎯 Zayıf Noktalar</div>
+        <div id="detail-weak-points"></div>
+      </div>
+
+      <!-- BADGES -->
+      <div class="card card-accent mb12">
+        <div class="section-title mb12">🏆 Kazanılan Rozetler</div>
+        <div class="badges-grid" id="detail-badges"></div>
+      </div>
+
+      <!-- START BUTTON -->
+      <button class="btn btn-primary btn-full btn-lg" onclick="startFromDetail()">🚀 Sınava Başla</button>
+    </div>
   </div>
 </div>
 
@@ -1106,6 +1470,23 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   </div>
 </div>
 
+
+<!-- EDIT PROFILE MODAL -->
+<div class="modal-overlay" id="modal-editprofile" style="display:none">
+  <div class="modal">
+    <div class="modal-title">✏️ Profili Düzenle</div>
+    <button class="modal-close" onclick="closeModal('modal-editprofile')">✕</button>
+    <div style="font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:8px">İSİM</div>
+    <input id="edit-profile-name" type="text" class="s-input s-input-wide" style="width:100%;margin-bottom:16px" placeholder="İsim gir...">
+    <div style="font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:8px">AVATAR</div>
+    <div class="avatar-grid" id="edit-avatar-grid"></div>
+    <div style="margin-top:16px;display:flex;gap:10px">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeModal('modal-editprofile')">İptal</button>
+      <button class="btn btn-primary" style="flex:2" onclick="saveEditProfile()">💾 Kaydet</button>
+    </div>
+  </div>
+</div>
+
 <!-- NEW PROFILE MODAL -->
 <div class="modal-overlay" id="modal-newprofile" style="display:none">
   <div class="modal">
@@ -1194,14 +1575,22 @@ function renderProfiles() {
 
   profiles.forEach(p => {
     const pd = getProfileData(p.id);
-    const pct = pd.totalQuestions > 0 ? Math.round((pd.topicStats.totalCorrect || 0) / pd.totalQuestions * 100) : 0;
+    const totalCorrect = (pd.topicStats && pd.topicStats.totalCorrect) || 0;
+    const pct = pd.totalQuestions > 0 ? Math.round(totalCorrect / pd.totalQuestions * 100) : 0;
+    const lastExam = pd.history && pd.history.length > 0 ? pd.history[pd.history.length-1] : null;
+
     const div = document.createElement('div');
     div.className = 'profile-card';
+    div.style.paddingBottom = '42px'; // room for action bar
     div.innerHTML = `
-      <button class="profile-delete" onclick="deleteProfile(event,'${p.id}')">✕</button>
       <div class="profile-avatar">${p.avatar}</div>
       <div class="profile-name">${p.name}</div>
-      <div class="profile-stats-mini">${pd.totalQuestions} soru · ${pd.totalExams} sınav</div>
+      <div class="profile-stats-mini">${pd.totalQuestions || 0} soru · ${pd.totalExams || 0} sınav${pct > 0 ? ' · %' + pct : ''}</div>
+      <div class="profile-card-actions">
+        <button class="pca-btn view" onclick="event.stopPropagation();openProfileDetail('${p.id}')">📊 Detay</button>
+        <button class="pca-btn edit" onclick="event.stopPropagation();openEditProfileModal('${p.id}')">✏️ Düzenle</button>
+        <button class="pca-btn del" onclick="event.stopPropagation();confirmDeleteProfile('${p.id}')">🗑️ Sil</button>
+      </div>
     `;
     div.onclick = () => selectProfile(p);
     grid.appendChild(div);
@@ -1223,20 +1612,265 @@ function selectProfile(p) {
   showBottomNav(false);
 }
 
+function startFromDetail() {
+  gotoScreen('topic');
+  document.getElementById('topic-screen-profile-name').textContent = activeProfile.avatar + ' ' + activeProfile.name;
+  updateTopicBests();
+  showBottomNav(false);
+}
+
 function backToProfiles() {
   gotoScreen('profiles');
   showBottomNav(false);
 }
 
-function deleteProfile(e, pid) {
-  e.stopPropagation();
-  if (!confirm('Bu profili silmek istiyor musun?')) return;
+function confirmDeleteProfile(pid) {
+  if (!confirm('Bu profili ve tüm verilerini silmek istediğinden emin misin?')) return;
+  doDeleteProfile(pid);
+}
+
+function deleteCurrentProfile() {
+  if (!activeProfile) return;
+  confirmDeleteProfile(activeProfile.id);
+}
+
+function doDeleteProfile(pid) {
   let profiles = getProfiles().filter(p => p.id !== pid);
   saveProfiles(profiles);
-  // Also remove data
   const s = ls();
   if (s.profileData) { delete s.profileData[pid]; ss(s); }
+  activeProfile = null;
+  gotoScreen('profiles');
   renderProfiles();
+  showNotif('🗑️', 'Profil silindi', 'accent');
+}
+
+// Backward compat
+function deleteProfile(e, pid) { e && e.stopPropagation(); confirmDeleteProfile(pid); }
+
+// ── PROFILE DETAIL ──────────────────────────────────────────
+function openProfileDetail(pid) {
+  const profiles = getProfiles();
+  const p = profiles.find(x => x.id === pid);
+  if (!p) return;
+  activeProfile = p;
+  renderProfileDetail(p);
+  gotoScreen('profile-detail');
+  showBottomNav(false);
+}
+
+function renderProfileDetail(p) {
+  const pd = getProfileData(p.id);
+  document.getElementById('detail-avatar').textContent = p.avatar;
+  document.getElementById('detail-name').textContent = p.name;
+  document.getElementById('detail-joined').textContent = 'Profil ID: ' + p.id.replace('p','#');
+
+  const totalCorrect = (pd.topicStats && pd.topicStats.totalCorrect) || 0;
+  const totalQ = pd.totalQuestions || 0;
+  const pct = totalQ > 0 ? Math.round(totalCorrect / totalQ * 100) : 0;
+  const bestPct = (pd.history||[]).reduce((b,h) => h.pct > b ? h.pct : b, 0);
+
+  document.getElementById('dqs-total').textContent = totalQ;
+  document.getElementById('dqs-exams').textContent = pd.totalExams || 0;
+  document.getElementById('dqs-best').textContent = bestPct ? '%' + bestPct : '—';
+  document.getElementById('dqs-streak').textContent = (pd.bestStreak||0) + '🔥';
+
+  // Donut chart
+  const circ = 100; // circumference for r=15.9 ≈ 2*pi*15.9 ≈ 100
+  const totalWrong = totalQ - totalCorrect;
+  const correctArc = totalQ > 0 ? (totalCorrect / totalQ * circ) : 0;
+  const wrongArc = totalQ > 0 ? (totalWrong / totalQ * circ) : 0;
+  const wrongOffset = circ - correctArc;
+  document.getElementById('donut-correct-arc').setAttribute('stroke-dasharray', correctArc + ' ' + (circ - correctArc));
+  document.getElementById('donut-wrong-arc').setAttribute('stroke-dasharray', wrongArc + ' ' + (circ - wrongArc));
+  document.getElementById('donut-wrong-arc').setAttribute('stroke-dashoffset', -(correctArc));
+  document.getElementById('donut-pct').textContent = totalQ > 0 ? '%' + pct : '—';
+  document.getElementById('dl-correct').textContent = totalCorrect + ' Doğru';
+  document.getElementById('dl-wrong').textContent = totalWrong + ' Yanlış';
+  document.getElementById('dl-streak').textContent = (pd.bestStreak||0) + ' Max Seri';
+
+  // Score line chart
+  const history = pd.history || [];
+  const last10 = history.slice(-10);
+  const svgEl = document.getElementById('score-svg');
+  const noDataEl = document.getElementById('chart-no-data');
+  
+  if (last10.length < 2) {
+    noDataEl.style.display = 'block';
+    document.getElementById('chart-area').setAttribute('d','');
+    document.getElementById('chart-line').setAttribute('d','');
+    document.getElementById('chart-dots').innerHTML = '';
+  } else {
+    noDataEl.style.display = 'none';
+    const W = 300, H = 100, PAD = 10;
+    const uw = (W - PAD*2) / (last10.length - 1);
+    const points = last10.map((h,i) => {
+      const x = PAD + i * uw;
+      const y = PAD + (100 - h.pct) / 100 * (H - PAD*2);
+      return {x, y, pct: h.pct};
+    });
+    const lineD = points.map((p,i) => (i===0?'M':'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1)).join(' ');
+    const areaD = lineD + ' L' + points[points.length-1].x.toFixed(1) + ',' + (H-PAD) + ' L' + PAD + ',' + (H-PAD) + ' Z';
+    document.getElementById('chart-area').setAttribute('d', areaD);
+    document.getElementById('chart-line').setAttribute('d', lineD);
+    document.getElementById('chart-dots').innerHTML = points.map(p =>
+      `<circle class="chart-dot${p.pct>=90?' perfect':''}" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4"/>`
+    ).join('');
+  }
+
+  // Topic bars
+  const topicInfo = [
+    {key:'carpim',name:'✖️ Çarpım',color:'var(--blue)'},
+    {key:'toplama',name:'➕ Toplama',color:'var(--green)'},
+    {key:'cikarma',name:'➖ Çıkarma',color:'var(--accent)'},
+    {key:'bolme',name:'➗ Bölme',color:'var(--gold)'},
+    {key:'kesirler',name:'🔢 Kesirler',color:'var(--purple)'},
+  ];
+  document.getElementById('detail-topic-bars').innerHTML = topicInfo.map(t => {
+    const ts = pd.topicStats && pd.topicStats[t.key];
+    const p2 = ts && ts.total > 0 ? Math.round(ts.correct/ts.total*100) : 0;
+    const tot = ts ? ts.total : 0;
+    return `<div class="topic-stats-bar">
+      <div class="tsb-label"><span>${t.name}</span><span style="color:${t.color}">${tot>0?'%'+p2+' · '+tot+' soru':'—'}</span></div>
+      <div class="tsb-track"><div class="tsb-fill" style="width:${p2}%;background:${t.color}"></div></div>
+    </div>`;
+  }).join('');
+
+  // Weekly activity
+  const days = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+  const now = new Date();
+  const weekData = Array(7).fill(0);
+  (pd.history||[]).forEach(h => {
+    const d = parseDate(h.date);
+    if (!d) return;
+    const diff = Math.floor((now - d) / 86400000);
+    if (diff >= 0 && diff < 7) { weekData[6 - diff] += h.total; }
+  });
+  const maxW = Math.max(...weekData, 1);
+  document.getElementById('detail-weekly-bars').innerHTML = weekData.map((v,i) => {
+    const hh = Math.round(v/maxW*75) + 5;
+    return `<div class="chart-bar-wrap"><div class="chart-bar" style="height:${hh}px;background:${v>0?'var(--blue)':'var(--border)'};opacity:${v>0?1:0.3}"></div></div>`;
+  }).join('');
+  document.getElementById('detail-weekly-days').innerHTML = weekData.map((v,i) => {
+    const dayIdx = (now.getDay() + i - 6 + 7) % 7;
+    return `<div class="chart-bar-wrap"><div class="chart-day">${days[dayIdx]}</div></div>`;
+  }).join('');
+
+  // Recent exams
+  const recentEl = document.getElementById('detail-recent-exams');
+  const recent = (pd.history||[]).slice(-8).reverse();
+  if (!recent.length) {
+    recentEl.innerHTML = '<div style="color:var(--muted);text-align:center;padding:12px;font-weight:700">Henüz sınav yok</div>';
+  } else {
+    recentEl.innerHTML = recent.map(h => {
+      const pctColor = h.pct>=90?'var(--gold)':h.pct>=70?'var(--green)':h.pct>=50?'var(--blue)':'var(--accent)';
+      const emoji = h.pct>=90?'🏆':h.pct>=70?'🎉':h.pct>=50?'👍':'💪';
+      return `<div class="recent-exam-item">
+        <div class="rei-left">
+          <div class="rei-topic">${h.topics||''} · ${h.diff||''}</div>
+          <div class="rei-date">${h.date||''} ${h.time||''}</div>
+        </div>
+        <div class="rei-right">
+          <span style="font-size:0.82rem;font-weight:700;color:var(--green)">✓${h.correct}</span>
+          <span style="font-size:0.82rem;font-weight:700;color:var(--accent)">✗${h.wrong}</span>
+          <span class="rei-pct" style="color:${pctColor}">${emoji} %${h.pct}</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Weak points
+  const ws = pd.wrongStats || {};
+  const weakArr = Object.entries(ws)
+    .filter(([k,v]) => v.total >= 2)
+    .map(([k,v]) => ({key:k, rate: Math.round(v.wrong/v.total*100), total:v.total}))
+    .sort((a,b) => b.rate-a.rate).slice(0,6);
+  const weakEl = document.getElementById('detail-weak-points');
+  if (!weakArr.length) {
+    weakEl.innerHTML = '<div style="color:var(--muted);text-align:center;padding:12px;font-weight:700">Henüz yeterli veri yok</div>';
+  } else {
+    weakEl.innerHTML = weakArr.map(w => `
+      <div class="weak-item">
+        <span class="weak-q">${w.key}</span>
+        <span class="weak-rate">%${w.rate} hata · ${w.total}x</span>
+      </div>
+    `).join('');
+  }
+
+  // Badges
+  const earnedBadges = pd.badges || [];
+  const badgesEl = document.getElementById('detail-badges');
+  if (!earnedBadges.length) {
+    badgesEl.innerHTML = '<div style="color:var(--muted);font-weight:700;font-size:0.85rem">Henüz rozet yok — sınava gir!</div>';
+  } else {
+    const earned = earnedBadges.map(b => b.id);
+    badgesEl.innerHTML = BADGE_DEFS.filter(b => earned.includes(b.id)).map(b => {
+      const bd = earnedBadges.find(x=>x.id===b.id);
+      return `<div class="badge-item">
+        <span class="badge-icon">${b.icon}</span>
+        <div class="badge-info">
+          <div class="badge-name">${b.name}</div>
+          <div class="badge-desc">${bd ? bd.date : ''}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+}
+
+// ── EDIT PROFILE ──────────────────────────────────────────
+let editingProfileId = null;
+
+function openEditProfileModal(pid) {
+  const profiles = getProfiles();
+  const p = profiles.find(x => x.id === pid);
+  if (!p) return;
+  editingProfileId = pid;
+
+  document.getElementById('edit-profile-name').value = p.name;
+  const grid = document.getElementById('edit-avatar-grid');
+  grid.innerHTML = '';
+  AVATARS.forEach((av, i) => {
+    const d = document.createElement('div');
+    d.className = 'avatar-opt' + (av === p.avatar ? ' selected' : '');
+    d.textContent = av;
+    d.onclick = () => {
+      document.querySelectorAll('#edit-avatar-grid .avatar-opt').forEach(x => x.classList.remove('selected'));
+      d.classList.add('selected');
+    };
+    grid.appendChild(d);
+  });
+  openModal('modal-editprofile');
+}
+
+function editCurrentProfile() {
+  if (!activeProfile) return;
+  openEditProfileModal(activeProfile.id);
+}
+
+function saveEditProfile() {
+  const name = document.getElementById('edit-profile-name').value.trim();
+  if (!name) { showNotif('❗','İsim gir!','accent'); return; }
+  const sel = document.querySelector('#edit-avatar-grid .avatar-opt.selected');
+  const avatar = sel ? sel.textContent : AVATARS[0];
+
+  let profiles = getProfiles();
+  const idx = profiles.findIndex(p => p.id === editingProfileId);
+  if (idx === -1) return;
+  profiles[idx].name = name;
+  profiles[idx].avatar = avatar;
+  saveProfiles(profiles);
+  closeModal('modal-editprofile');
+  renderProfiles();
+
+  // Update activeProfile if it's the same
+  if (activeProfile && activeProfile.id === editingProfileId) {
+    activeProfile = profiles[idx];
+    // Re-render detail if on detail screen
+    if (document.getElementById('screen-profile-detail').classList.contains('active')) {
+      renderProfileDetail(activeProfile);
+    }
+  }
+  showNotif('✏️', 'Profil güncellendi!', 'green');
 }
 
 function openNewProfileModal() {
