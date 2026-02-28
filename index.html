@@ -1159,10 +1159,11 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   <div style="width:100%;max-width:640px;padding-bottom:80px;">
     <div style="display:flex;align-items:center;gap:10px;padding:16px 0 20px;">
       <button class="icon-btn" onclick="backToProfiles()">←</button>
-      <div>
+      <div style="flex:1;cursor:pointer;" onclick="activeProfile && openProfileDetail(activeProfile.id)">
         <div style="font-family:'Fredoka One',sans-serif;font-size:1.3rem;" id="topic-screen-profile-name">Ahmet</div>
-        <div style="font-size:0.75rem;color:var(--muted);font-weight:700;">Konu seç</div>
+        <div style="font-size:0.75rem;color:var(--blue);font-weight:700;">📊 Profile git →</div>
       </div>
+      <button class="icon-btn" style="border-color:rgba(79,142,247,0.4);color:var(--blue);" onclick="activeProfile && openProfileDetail(activeProfile.id)" title="Profil Detayı">📊</button>
     </div>
 
     <div class="section-title">📚 Konu Seç</div>
