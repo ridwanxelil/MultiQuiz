@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="dark">
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -76,12 +76,17 @@ body {
 .screen {
   display: none;
   width: 100%;
-  max-width: 640px;
-  padding: 16px;
   flex-direction: column;
   align-items: center;
   animation: fadeUp 0.35s ease;
   min-height: 100vh;
+}
+
+/* Inner container for all screens — full width on mobile, capped on desktop */
+.screen-inner {
+  width: 100%;
+  max-width: 680px;
+  padding: 0 16px;
 }
 
 .screen.active { display: flex; }
@@ -725,6 +730,8 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   display: flex;
   z-index: 50;
   padding-bottom: env(safe-area-inset-bottom, 0);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 .nav-btn { flex: 1; padding: 10px 0 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; border: none; background: transparent; color: var(--muted); transition: all 0.18s; }
 .nav-btn.active { color: var(--blue); }
@@ -744,7 +751,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 .mt16 { margin-top: 16px; }
 
 /* Safe area padding for bottom nav screens */
-.has-bottom-nav { padding-bottom: calc(66px + env(safe-area-inset-bottom, 0)); }
+.has-bottom-nav { padding-bottom: calc(90px + env(safe-area-inset-bottom, 0)); }
 
 
 /* ===== PROFILE DETAIL SCREEN ===== */
@@ -1140,6 +1147,71 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 
 /* SETTINGS SECTION DIVIDER */
 .s-section { font-family: 'Fredoka One', sans-serif; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; padding: 10px 0 4px; margin-bottom: 4px; }
+
+/* ===== VERSUS MODE ===== */
+.vs-turn-indicator { height:4px; border-radius:99px; margin-bottom:8px; transition:background 0.3s; }
+
+/* ===== DAILY GOAL ===== */
+.goal-circle-wrap { display:flex; justify-content:center; margin:16px 0; }
+.goal-circle { position:relative; width:140px; height:140px; }
+.goal-circle svg { transform:rotate(-90deg); width:140px; height:140px; }
+.goal-circle-center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.goal-num { font-family:'Fredoka One',sans-serif; font-size:2rem; line-height:1; color:var(--text); }
+.goal-sub { font-size:0.68rem; color:var(--muted); font-weight:700; text-transform:uppercase; }
+.streak-calendar { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-top:8px; }
+.sc-day { aspect-ratio:1; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.55rem; font-weight:700; text-transform:uppercase; color:var(--muted); }
+.sc-day.active { background:var(--green); color:white; }
+.sc-day.today { background:var(--blue); color:white; }
+.sc-day.empty { background:var(--border); opacity:0.4; }
+
+/* ===== PARENT PANEL ===== */
+.parent-profile-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:14px; text-align:center; cursor:pointer; transition:all 0.2s; }
+.parent-profile-card:hover { border-color:var(--blue); transform:translateY(-2px); }
+.lb-item { display:flex; align-items:center; gap:12px; padding:10px 14px; background:var(--surface); border:1px solid var(--border); border-radius:12px; margin-bottom:8px; }
+.lb-rank { font-family:'Fredoka One',sans-serif; font-size:1.3rem; min-width:30px; }
+.lb-avatar { font-size:1.4rem; }
+.lb-name { font-weight:800; font-size:0.9rem; flex:1; }
+.lb-score { font-family:'Space Mono',monospace; font-size:0.82rem; font-weight:700; color:var(--gold); }
+
+/* ===== MONTHLY CHART ===== */
+.monthly-bar-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+.monthly-month-label { font-size:0.72rem; font-weight:700; color:var(--muted); min-width:32px; text-align:right; }
+.monthly-bar-track { flex:1; height:14px; background:var(--border); border-radius:99px; overflow:hidden; }
+.monthly-bar-fill { height:100%; border-radius:99px; transition:width 1s ease; }
+.monthly-pct-label { font-size:0.72rem; font-weight:700; min-width:34px; text-align:left; }
+
+/* ===== TEMA RENK ===== */
+.theme-color-grid { display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
+.tc-opt { width:30px; height:30px; border-radius:50%; cursor:pointer; border:3px solid transparent; transition:all 0.18s; }
+.tc-opt.selected { border-color:var(--text); transform:scale(1.15); }
+
+/* ===== OPEN ANSWER ===== */
+.open-answer-input { width:100%; background:var(--surface); border:2px solid var(--border); border-radius:14px; padding:14px 16px; font-family:'Fredoka One',sans-serif; font-size:1.8rem; color:var(--text); text-align:center; outline:none; transition:border-color 0.18s; margin-bottom:10px; -webkit-appearance:none; }
+.open-answer-input:focus { border-color:var(--blue); }
+.open-answer-input.correct { border-color:var(--green); background:rgba(15,196,126,0.08); color:var(--green); }
+.open-answer-input.wrong { border-color:var(--accent); background:rgba(233,69,96,0.08); color:var(--accent); }
+.lang-btn { padding:7px 14px; border-radius:9px; border:2px solid var(--border); background:var(--surface); color:var(--text2); font-weight:800; font-size:0.85rem; cursor:pointer; transition:all 0.18s; }
+.lang-btn.active { border-color:var(--blue); color:var(--blue); background:rgba(79,142,247,0.1); }
+
+
+.more-menu-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--text2);
+  transition: all 0.15s;
+}
+.more-menu-btn span:first-child { font-size: 1.3rem; }
+.more-menu-btn:hover, .more-menu-btn.active { background: rgba(79,142,247,0.12); color: var(--blue); }
+
 </style>
 </head>
 <body>
@@ -1154,7 +1226,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <!--  SCREEN 1: PROFILE SELECT                                     -->
 <!-- ============================================================ -->
 <div class="screen active has-bottom-nav" id="screen-profiles">
-  <div style="width:100%;max-width:640px;padding:30px 16px 16px;">
+  <div class="screen-inner" style="padding-top:30px;">
     <div class="profile-hero">
       <h1>🧮 Matematik</h1>
       <p>Profilini seç ve sınava başla</p>
@@ -1168,7 +1240,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <!--  SCREEN: PROFILE DETAIL                                       -->
 <!-- ============================================================ -->
 <div class="screen has-bottom-nav" id="screen-profile-detail">
-  <div style="width:100%;max-width:640px;padding:0 0 20px;">
+  <div class="screen-inner" style="padding-bottom:20px;">
 
     <!-- HERO -->
     <div class="profile-detail-hero">
@@ -1186,7 +1258,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       </div>
     </div>
 
-    <div style="padding:0 16px">
+    <div>
 
       <!-- SCORE LINE CHART -->
       <div class="card card-accent mb12">
@@ -1281,7 +1353,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <!--  SCREEN 2: TOPIC + DIFFICULTY SELECT (combined)              -->
 <!-- ============================================================ -->
 <div class="screen" id="screen-topic">
-  <div style="width:100%;max-width:640px;padding-bottom:80px;">
+  <div class="screen-inner" style="padding-bottom:80px;">
     <div style="display:flex;align-items:center;gap:10px;padding:16px 0 20px;">
       <button class="icon-btn" onclick="backToProfiles()">←</button>
       <div style="flex:1;cursor:pointer;" onclick="activeProfile && openProfileDetail(activeProfile.id)">
@@ -1367,7 +1439,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <!--  SCREEN 3: QUIZ                                               -->
 <!-- ============================================================ -->
 <div class="screen" id="screen-quiz">
-  <div style="width:100%;max-width:640px;">
+  <div class="screen-inner">
     <div class="quiz-header">
       <div class="quiz-topic-badge" id="quiz-topic-badge">Çarpım</div>
       <div class="streak-display" id="streak-display" style="display:none">
@@ -1408,7 +1480,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <!--  SCREEN 4: RESULTS                                            -->
 <!-- ============================================================ -->
 <div class="screen" id="screen-results">
-  <div style="width:100%;max-width:640px;padding-bottom:20px;">
+  <div class="screen-inner" style="padding-bottom:20px;">
     <div class="card card-accent mb12">
       <div class="result-hero">
         <span class="result-emoji" id="r-emoji">🎉</span>
@@ -1439,7 +1511,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <!--  SCREEN 5: STATS (bottom nav)                                 -->
 <!-- ============================================================ -->
 <div class="screen has-bottom-nav" id="screen-stats">
-  <div style="width:100%;max-width:640px;padding-top:16px;">
+  <div class="screen-inner" style="padding-top:16px;">
     <div style="font-family:'Fredoka One',sans-serif;font-size:1.5rem;margin-bottom:16px;" id="stats-profile-name">📊 İstatistikler</div>
 
     <div class="stats-grid mb12">
@@ -1473,7 +1545,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <!--  SCREEN 6: HISTORY (bottom nav)                               -->
 <!-- ============================================================ -->
 <div class="screen has-bottom-nav" id="screen-history">
-  <div style="width:100%;max-width:640px;padding-top:16px;">
+  <div class="screen-inner" style="padding-top:16px;">
     <div style="font-family:'Fredoka One',sans-serif;font-size:1.5rem;margin-bottom:16px;">📋 Geçmiş</div>
     <div id="history-content"></div>
   </div>
@@ -1483,7 +1555,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <!--  SCREEN 7: BADGES (bottom nav)                                -->
 <!-- ============================================================ -->
 <div class="screen has-bottom-nav" id="screen-badges">
-  <div style="width:100%;max-width:640px;padding-top:16px;">
+  <div class="screen-inner" style="padding-top:16px;">
     <div style="font-family:'Fredoka One',sans-serif;font-size:1.5rem;margin-bottom:16px;">🏆 Rozetlerim</div>
     <div class="all-badges-grid" id="all-badges-grid"></div>
   </div>
@@ -1499,32 +1571,158 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     <span class="nav-icon">👤</span>
     <span class="nav-label">Profiller</span>
   </button>
-  <button class="nav-btn" id="nav-history" onclick="navGo('history')">
-    <span class="nav-icon">📋</span>
-    <span class="nav-label">Geçmiş</span>
+  <button class="nav-btn" id="nav-more" onclick="toggleMoreMenu()">
+    <span class="nav-icon">⋯</span>
+    <span class="nav-label">Daha Fazla</span>
   </button>
-  <button class="nav-btn" id="nav-badges" onclick="navGo('badges')">
-    <span class="nav-icon">🏆</span>
-    <span class="nav-label">Rozetler</span>
-  </button>
-  <button class="nav-btn" id="nav-settings" onclick="navGo('settings')" onpointerdown="startKidsUnlock()" onpointerup="cancelKidsUnlock()" onpointerleave="cancelKidsUnlock()">
-    <span class="nav-icon">⚙️</span>
-    <span class="nav-label">Ayarlar</span>
-  </button>
-  <button class="nav-btn" id="nav-changelog" onclick="navGo('changelog')">
-    <span class="nav-icon">🆕</span>
-    <span class="nav-label">Yenilikler</span>
-  </button>
+</div>
+
+<!-- MORE MENU POPUP -->
+<div id="more-menu" style="display:none;position:fixed;bottom:66px;left:0;right:0;z-index:49;padding:0 12px 8px;">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:18px;padding:8px;box-shadow:0 -8px 32px rgba(0,0,0,0.3);">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;">
+      <button class="more-menu-btn" id="nav-versus" onclick="navGo('versus')"><span>⚔️</span><span>Yarışma</span></button>
+      <button class="more-menu-btn" id="nav-daily" onclick="navGo('daily')"><span>📆</span><span>Hedef</span></button>
+      <button class="more-menu-btn" id="nav-parent" onclick="navGo('parent')"><span>👨‍👩‍👧</span><span>Ebeveyn</span></button>
+      <button class="more-menu-btn" id="nav-monthly" onclick="navGo('monthly')"><span>📉</span><span>Aylık</span></button>
+      <button class="more-menu-btn" id="nav-history" onclick="navGo('history')"><span>📋</span><span>Geçmiş</span></button>
+      <button class="more-menu-btn" id="nav-badges" onclick="navGo('badges')"><span>🏆</span><span>Rozetler</span></button>
+      <button class="more-menu-btn" id="nav-changelog" onclick="navGo('changelog')"><span>🆕</span><span>Yenilikler</span></button>
+      <button class="more-menu-btn" id="nav-settings" onclick="navGo('settings')" onpointerdown="startKidsUnlock()" onpointerup="cancelKidsUnlock()" onpointerleave="cancelKidsUnlock()"><span>⚙️</span><span>Ayarlar</span></button>
+    </div>
+  </div>
 </div>
 
 <!-- ============================================================ -->
 <!--  SCREEN: CHANGELOG / YENİLİKLER                               -->
 <!-- ============================================================ -->
 <div class="screen has-bottom-nav" id="screen-changelog">
-  <div style="width:100%;max-width:640px;padding-top:20px;">
+  <div class="screen-inner" style="padding-top:20px;">
     <div style="font-family:'Fredoka One',sans-serif;font-size:1.6rem;margin-bottom:4px;">🆕 Yenilikler</div>
     <div style="font-size:0.8rem;color:var(--muted);font-weight:700;margin-bottom:24px;">Uygulama geliştirme günlüğü</div>
     <div id="changelog-list"></div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!--  SCREEN: EBEVEYN PANELİ                                       -->
+<!-- ============================================================ -->
+<div class="screen has-bottom-nav" id="screen-parent">
+  <div class="screen-inner" style="padding-top:16px;">
+    <div style="font-family:'Fredoka One',sans-serif;font-size:1.5rem;margin-bottom:4px;">👨‍👩‍👧 Ebeveyn Paneli</div>
+    <div style="font-size:0.78rem;color:var(--muted);font-weight:700;margin-bottom:16px;">Tüm profillerin özeti</div>
+    <div id="parent-summary-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;"></div>
+    <div class="card card-accent mb12">
+      <div class="section-title mb12">📊 Profil Karşılaştırması</div>
+      <div id="parent-compare-bars"></div>
+    </div>
+    <div class="card card-accent mb12">
+      <div class="section-title mb12">📅 Bu Hafta Aktivite</div>
+      <div id="parent-weekly"></div>
+    </div>
+    <div class="card card-accent">
+      <div class="section-title mb12">🏆 Lider Tablosu</div>
+      <div id="parent-leaderboard"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  SCREEN: İKİ OYUNCULU MOD                                     -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-versus">
+  <div class="screen-inner" style="padding-top:16px;padding-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <button class="icon-btn" onclick="navGo('home')">←</button>
+      <div style="font-family:'Fredoka One',sans-serif;font-size:1.3rem;">⚔️ İki Oyunculu</div>
+    </div>
+    <!-- Setup -->
+    <div id="versus-setup">
+      <div class="card mb12">
+        <div class="section-title mb8">👤 Oyuncu 1</div>
+        <select id="vs-p1" class="s-input s-input-wide" style="width:100%;text-align:left;"></select>
+      </div>
+      <div class="card mb12">
+        <div class="section-title mb8">👥 Oyuncu 2</div>
+        <select id="vs-p2" class="s-input s-input-wide" style="width:100%;text-align:left;"></select>
+      </div>
+      <div class="card mb12">
+        <div class="section-title mb8">⚙️ Ayarlar</div>
+        <div class="settings-row">
+          <div><div class="sr-label">Toplam Soru</div></div>
+          <input class="s-input" id="vs-qcount" type="number" min="5" max="50" value="10">
+        </div>
+        <div class="settings-row" style="margin-top:8px;">
+          <div><div class="sr-label">Konu</div></div>
+          <select id="vs-topic" class="s-input" style="width:120px;text-align:left;">
+            <option value="carpim">✖️ Çarpım</option>
+            <option value="toplama">➕ Toplama</option>
+            <option value="cikarma">➖ Çıkarma</option>
+            <option value="bolme">➗ Bölme</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full btn-lg" onclick="startVersus()">⚔️ Yarışmaya Başla!</button>
+    </div>
+    <!-- Game -->
+    <div id="versus-game" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div id="vs-p1-score" style="text-align:center;flex:1;">
+          <div style="font-family:'Fredoka One',sans-serif;font-size:1.6rem;color:var(--blue);" id="vs-p1-pts">0</div>
+          <div style="font-size:0.75rem;color:var(--muted);font-weight:700;" id="vs-p1-name">P1</div>
+        </div>
+        <div style="font-family:'Fredoka One',sans-serif;font-size:1.2rem;color:var(--muted);">VS</div>
+        <div id="vs-p2-score" style="text-align:center;flex:1;">
+          <div style="font-family:'Fredoka One',sans-serif;font-size:1.6rem;color:var(--accent);" id="vs-p2-pts">0</div>
+          <div style="font-size:0.75rem;color:var(--muted);font-weight:700;" id="vs-p2-name">P2</div>
+        </div>
+      </div>
+      <div class="remaining-badge mb8" id="vs-remaining"></div>
+      <div class="timer-wrap">
+        <div class="timer-bar"><div class="timer-fill" id="vs-timer-fill"></div></div>
+        <div class="timer-num" id="vs-timer-num">5</div>
+      </div>
+      <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);text-align:center;margin-bottom:8px;" id="vs-turn-label">OYUNCU 1'İN SIRASI</div>
+      <div class="quiz-card">
+        <div class="q-text" id="vs-question"></div>
+        <div class="choices" id="vs-choices"></div>
+        <div class="feedback-msg" id="vs-feedback"></div>
+      </div>
+    </div>
+    <!-- Result -->
+    <div id="versus-result" style="display:none;">
+      <div class="card card-accent" style="text-align:center;padding:30px 20px;">
+        <div style="font-size:3rem;margin-bottom:8px;" id="vs-winner-emoji">🏆</div>
+        <div style="font-family:'Fredoka One',sans-serif;font-size:1.6rem;margin-bottom:16px;" id="vs-winner-text">Kazanan!</div>
+        <div style="display:flex;justify-content:center;gap:24px;margin-bottom:20px;">
+          <div style="text-align:center;"><div style="font-family:'Fredoka One',sans-serif;font-size:2rem;color:var(--blue);" id="vs-final-p1-pts">0</div><div style="font-size:0.72rem;color:var(--muted);font-weight:700;" id="vs-final-p1-name">P1</div></div>
+          <div style="text-align:center;"><div style="font-family:'Fredoka One',sans-serif;font-size:2rem;color:var(--accent);" id="vs-final-p2-pts">0</div><div style="font-size:0.72rem;color:var(--muted);font-weight:700;" id="vs-final-p2-name">P2</div></div>
+        </div>
+        <button class="btn btn-primary btn-full mb8" onclick="restartVersus()">🔄 Tekrar Oyna</button>
+        <button class="btn btn-ghost btn-full" onclick="navGo('home')">🏠 Ana Sayfa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  SCREEN: GÜNLÜK HEDEF                                         -->
+<!-- ============================================================ -->
+<div class="screen has-bottom-nav" id="screen-daily">
+  <div class="screen-inner" style="padding-top:16px;">
+    <div style="font-family:'Fredoka One',sans-serif;font-size:1.5rem;margin-bottom:16px;">📆 Günlük Hedef</div>
+    <div id="daily-content"></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  SCREEN: AYLIK GELİŞİM                                        -->
+<!-- ============================================================ -->
+<div class="screen has-bottom-nav" id="screen-monthly">
+  <div class="screen-inner" style="padding-top:16px;">
+    <div style="font-family:'Fredoka One',sans-serif;font-size:1.5rem;margin-bottom:16px;">📉 Aylık Gelişim</div>
+    <div id="monthly-content"></div>
   </div>
 </div>
 
@@ -1573,8 +1771,26 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       <div><div class="sr-label">Ses Efektleri</div></div>
       <label class="toggle-switch"><input type="checkbox" id="s-sound" checked><span class="toggle-slider"></span></label>
     </div>
+    <div class="settings-row">
+      <div><div class="sr-label">Dil</div><div class="sr-sub">Arayüz dili</div></div>
+      <div style="display:flex;gap:6px;">
+        <button class="lang-btn active" id="lang-tr" onclick="setLang('tr')">🇹🇷 TR</button>
+        <button class="lang-btn" id="lang-en" onclick="setLang('en')">🇬🇧 EN</button>
+      </div>
+    </div>
+    <div class="settings-row">
+      <div><div class="sr-label">Vurgu Rengi</div><div class="sr-sub">Ana tema rengi</div></div>
+      <div class="theme-color-grid" id="theme-color-grid"></div>
+    </div>
 
     <div class="s-section">Sınav</div>
+    <div class="settings-row">
+      <div><div class="sr-label">Soru Modu</div><div class="sr-sub">Şıklı veya klavye</div></div>
+      <div style="display:flex;gap:6px;">
+        <button class="lang-btn active" id="mode-mc" onclick="setQMode('mc')">🔘 Şıklı</button>
+        <button class="lang-btn" id="mode-open" onclick="setQMode('open')">⌨️ Yaz</button>
+      </div>
+    </div>
     <div class="settings-row">
       <div><div class="sr-label">Süre Limiti</div><div class="sr-sub">Soru başına saniye</div></div>
       <input class="s-input" id="s-timer" type="number" min="1" max="60" value="5">
@@ -1582,6 +1798,10 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     <div class="settings-row">
       <div><div class="sr-label">Cevap Gecikmesi</div><div class="sr-sub">Sonraki soru beklemesi</div></div>
       <input class="s-input" id="s-delay" type="number" min="0.5" max="3" step="0.5" value="1.2">
+    </div>
+    <div class="settings-row">
+      <div><div class="sr-label">Günlük Hedef</div><div class="sr-sub">Kaç soru hedefliyorsun?</div></div>
+      <input class="s-input" id="s-dailygoal" type="number" min="5" max="200" value="20">
     </div>
 
     <div class="s-section">Güvenlik</div>
@@ -1668,8 +1888,60 @@ let cfg = {
   sound: true,
   kidsMode: false,
   theme: 'dark',
-  pin: '4156'
+  pin: '4156',
+  lang: 'tr',
+  accentColor: '#4f8ef7',
+  qMode: 'mc',
+  dailyGoal: 20
 };
+
+const ACCENT_COLORS = [
+  { name:'Mavi', val:'#4f8ef7' },
+  { name:'Mor', val:'#a855f7' },
+  { name:'Yeşil', val:'#0fc47e' },
+  { name:'Kırmızı', val:'#e94560' },
+  { name:'Turuncu', val:'#ff7043' },
+  { name:'Pembe', val:'#ff4fa3' },
+  { name:'Sarı', val:'#f5a623' },
+  { name:'Cam Göbeği', val:'#00d4ff' },
+];
+
+const I18N = {
+  tr: {
+    appTitle: '🧮 Matematik',
+    profiles: 'Profiller',
+    home: 'Ana Sayfa',
+    more: 'Daha Fazla',
+    start: '🚀 Sınava Başla',
+    selectTopic: '📚 Konu Seç',
+    selectDiff: '🎯 Zorluk',
+    questionCount: '🔢 Soru Sayısı',
+    correct: 'Doğru',
+    wrong: 'Yanlış',
+    success: 'Başarı',
+    total: 'Toplam',
+    endExam: '🏁 Sınavı Bitir',
+    backTopic: '← Konu',
+  },
+  en: {
+    appTitle: '🧮 Math Quiz',
+    profiles: 'Profiles',
+    home: 'Home',
+    more: 'More',
+    start: '🚀 Start Quiz',
+    selectTopic: '📚 Select Topic',
+    selectDiff: '🎯 Difficulty',
+    questionCount: '🔢 Question Count',
+    correct: 'Correct',
+    wrong: 'Wrong',
+    success: 'Score',
+    total: 'Total',
+    endExam: '🏁 End Exam',
+    backTopic: '← Topic',
+  }
+};
+
+function t(key) { return (I18N[cfg.lang] || I18N.tr)[key] || key; }
 
 function loadCfg() {
   const s = ls();
@@ -1678,10 +1950,46 @@ function loadCfg() {
 }
 
 function applyCfg() {
-  document.documentElement.setAttribute('data-theme', cfg.theme || 'dark');
+  const theme = cfg.theme || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
   const el = document.querySelector('#screen-profiles h1');
-  if (el) el.textContent = cfg.appName || '🧮 Matematik';
-  document.title = cfg.appName || 'Matematik Sınavı';
+  if (el) el.textContent = cfg.appName || t('appTitle');
+  document.title = cfg.appName || t('appTitle');
+  // Apply accent color
+  if (cfg.accentColor) {
+    document.documentElement.style.setProperty('--blue', cfg.accentColor);
+  }
+  // Apply language UI updates
+  applyLang();
+}
+
+function applyLang() {
+  const lbs = document.querySelectorAll('[data-i18n]');
+  lbs.forEach(el => { const k = el.dataset.i18n; if (t(k)) el.textContent = t(k); });
+  // Update lang buttons
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.id === 'lang-' + cfg.lang);
+  });
+  // Update mode buttons
+  document.querySelectorAll('[id^="mode-"]').forEach(b => {
+    b.classList.toggle('active', b.id === 'mode-' + cfg.qMode);
+  });
+}
+
+function setLang(lang) {
+  cfg.lang = lang;
+  applyCfg();
+}
+
+function setQMode(mode) {
+  cfg.qMode = mode;
+  document.querySelectorAll('[id^="mode-"]').forEach(b => b.classList.toggle('active', b.id === 'mode-' + mode));
+}
+
+function setAccentColor(val) {
+  cfg.accentColor = val;
+  document.documentElement.style.setProperty('--blue', val);
+  document.querySelectorAll('.tc-opt').forEach(el => el.classList.toggle('selected', el.dataset.color === val));
 }
 
 function saveCfg() {
@@ -2384,6 +2692,77 @@ function renderQuestion(q) {
   } else {
     sd.style.display = 'none';
   }
+
+  // Open-ended mode: replace choices with text input
+  if (cfg.qMode === 'open' && q.display !== 'compare') {
+    choicesEl.innerHTML = `
+      <div style="grid-column:span 2;">
+        <input type="number" id="open-answer" class="open-answer-input" placeholder="?" autocomplete="off"
+          onkeydown="if(event.key==='Enter')submitOpenAnswer()">
+        <button class="btn btn-primary btn-full" onclick="submitOpenAnswer()">✓ Cevapla</button>
+      </div>`;
+    setTimeout(() => { const inp = document.getElementById('open-answer'); if (inp) inp.focus(); }, 100);
+  }
+}
+
+function submitOpenAnswer() {
+  const inp = document.getElementById('open-answer');
+  if (!inp || qState.answered) return;
+  const val = inp.value.trim();
+  if (!val) return;
+  // Create a fake button and call pick
+  inp.disabled = true;
+  document.querySelectorAll('#choices button').forEach(b => b.disabled = true);
+  const q = qState.currentQ;
+  const isCorrect = val === q.ansStr || (parseFloat(val) === parseFloat(q.ansStr));
+  inp.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) inp.value = '✗ ' + inp.value;
+  // Mirror pick logic
+  qState.answered = true;
+  clearInterval(qState.timerInterval);
+  const elapsed = (Date.now() - qState.startTime) / 1000;
+  qState.avgTime.push(elapsed);
+  const fb = document.getElementById('feedback');
+  if (isCorrect) {
+    fb.textContent = streak_msg(qState.streak + 1);
+    fb.className = 'feedback-msg ok';
+    qState.correct++;
+    qState.streak++;
+    if (qState.streak > qState.maxStreak) qState.maxStreak = qState.streak;
+    playSound('correct');
+    if (qState.streak >= 3) {
+      document.getElementById('streak-display').style.display = 'flex';
+      document.getElementById('streak-num').textContent = qState.streak;
+    }
+  } else {
+    fb.textContent = '✗ Yanlış! Doğru: ' + q.ansStr;
+    fb.className = 'feedback-msg fail';
+    qState.wrong++;
+    qState.streak = 0;
+    document.getElementById('streak-display').style.display = 'none';
+    qState.wrongItems.push({ q: q.key, yours: val, correct: q.ansStr, topic: q.topic });
+    playSound('wrong');
+    if (activeProfile) {
+      const pd = getProfileData(activeProfile.id);
+      if (!pd.wrongStats[q.key]) pd.wrongStats[q.key] = { wrong:0, total:0, topic:q.topic };
+      pd.wrongStats[q.key].wrong++;
+      pd.wrongStats[q.key].total++;
+      saveProfileData(activeProfile.id, pd);
+    }
+  }
+  if (activeProfile) {
+    const pd = getProfileData(activeProfile.id);
+    if (!pd.topicStats[q.topic]) pd.topicStats[q.topic] = { correct:0, total:0 };
+    pd.topicStats[q.topic].total++;
+    if (isCorrect) pd.topicStats[q.topic].correct++;
+    if (!pd.topicStats.totalCorrect) pd.topicStats.totalCorrect = 0;
+    if (isCorrect) pd.topicStats.totalCorrect++;
+    if (!pd.wrongStats[q.key]) pd.wrongStats[q.key] = { wrong:0, total:0, topic:q.topic };
+    pd.wrongStats[q.key].total++;
+    saveProfileData(activeProfile.id, pd);
+  }
+  updateScorebar();
+  qState.nextTimer = setTimeout(loadQuestion, cfg.nextDelay * 1000);
 }
 
 function renderFracs(fracs) {
@@ -2810,41 +3189,53 @@ const NAV_SCREENS = ['profiles','topic','stats','history','badges','profile-deta
 const FULLSCREEN = ['quiz','results'];
 
 function navGo(tab) {
-  if (tab === 'settings') {
-    openSettingsFromProfile();
-    return;
-  }
+  // close more menu
+  const mm = document.getElementById('more-menu');
+  if (mm) mm.style.display = 'none';
+
+  if (tab === 'settings') { openSettingsFromProfile(); return; }
 
   activeMainTab = tab;
   updateNavActive(tab);
 
   if (tab === 'home') {
-    if (activeProfile) {
-      gotoScreen('topic');
-    } else {
-      gotoScreen('profiles');
-      updateNavActive('profiles');
-    }
+    if (activeProfile) { gotoScreen('topic'); } else { gotoScreen('profiles'); updateNavActive('profiles'); }
   } else if (tab === 'profiles') {
-    gotoScreen('profiles');
-    renderProfiles();
+    gotoScreen('profiles'); renderProfiles();
   } else if (tab === 'history') {
-    gotoScreen('history');
-    renderHistory();
+    gotoScreen('history'); renderHistory();
   } else if (tab === 'badges') {
-    gotoScreen('badges');
-    renderAllBadges();
+    gotoScreen('badges'); renderAllBadges();
   } else if (tab === 'changelog') {
-    gotoScreen('changelog');
-    renderChangelog();
+    gotoScreen('changelog'); renderChangelog();
+  } else if (tab === 'versus') {
+    gotoScreen('versus'); populateVsSelects();
+  } else if (tab === 'daily') {
+    gotoScreen('daily'); renderDailyScreen();
+  } else if (tab === 'parent') {
+    if (cfg.kidsMode) { showNotif('🔒','Çocuk modunda kullanılamaz','accent'); return; }
+    openPinFor(() => { gotoScreen('parent'); renderParentPanel(); });
+  } else if (tab === 'monthly') {
+    gotoScreen('monthly'); renderMonthlyScreen();
   }
 }
 
 function updateNavActive(tab) {
-  ['home','profiles','history','badges','settings','changelog'].forEach(t => {
+  ['home','profiles','history','badges','settings','changelog','versus','daily','parent','monthly'].forEach(t => {
     const btn = document.getElementById('nav-'+t);
     if (btn) btn.classList.toggle('active', t === tab);
   });
+  // Also update more-menu buttons
+  document.querySelectorAll('.more-menu-btn').forEach(b => {
+    b.classList.toggle('active', b.id === 'nav-'+tab);
+  });
+  // Top-level nav
+  const homeScreens = ['topic','profiles'];
+  const isHomeActive = homeScreens.includes(document.querySelector('.screen.active')?.id?.replace('screen-',''));
+  const navHome = document.getElementById('nav-home');
+  if (navHome) navHome.classList.toggle('active', tab === 'home' || isHomeActive);
+  const navProfiles = document.getElementById('nav-profiles');
+  if (navProfiles) navProfiles.classList.toggle('active', tab === 'profiles');
 }
 
 // Keep old showMainScreen for internal calls
@@ -2864,12 +3255,13 @@ function syncNav() {
   const id = screen ? screen.id.replace('screen-','') : '';
   const isFullscreen = FULLSCREEN.includes(id);
   document.getElementById('bottom-nav').style.display = isFullscreen ? 'none' : 'flex';
-  if (id === 'profiles') updateNavActive('profiles');
-  else if (id === 'topic') updateNavActive('home');
-  else if (id === 'history') updateNavActive('history');
-  else if (id === 'badges') updateNavActive('badges');
-  else if (id === 'profile-detail') updateNavActive('profiles');
-  else if (id === 'changelog') updateNavActive('changelog');
+  const mm = document.getElementById('more-menu');
+  if (isFullscreen && mm) mm.style.display = 'none';
+
+  const tabMap = { profiles:'profiles', topic:'home', history:'history', badges:'badges',
+    'profile-detail':'profiles', changelog:'changelog', versus:'versus', daily:'daily',
+    parent:'parent', monthly:'monthly', stats:'home' };
+  if (tabMap[id]) updateNavActive(tabMap[id]);
 }
 
 // ═══════════════════════════════════════════════════════
@@ -2937,8 +3329,17 @@ function openSettings() {
   document.getElementById('s-delay').value = cfg.nextDelay;
   document.getElementById('s-sound').checked = cfg.sound;
   document.getElementById('s-kidsmode').checked = cfg.kidsMode;
+  document.getElementById('s-dailygoal').value = cfg.dailyGoal || 20;
   document.getElementById('s-success').style.display = 'none';
   updateThemeBtns();
+  applyLang();
+  // Populate accent color grid
+  const grid = document.getElementById('theme-color-grid');
+  if (grid) {
+    grid.innerHTML = ACCENT_COLORS.map(ac => 
+      `<div class="tc-opt${cfg.accentColor===ac.val?' selected':''}" style="background:${ac.val}" data-color="${ac.val}" onclick="setAccentColor('${ac.val}')" title="${ac.name}"></div>`
+    ).join('');
+  }
   openModal('modal-settings');
 }
 
@@ -2959,6 +3360,7 @@ function saveSettings() {
   cfg.nextDelay = Math.min(3, Math.max(0.5, parseFloat(document.getElementById('s-delay').value)||1.2));
   cfg.sound = document.getElementById('s-sound').checked;
   cfg.kidsMode = document.getElementById('s-kidsmode').checked;
+  cfg.dailyGoal = Math.min(200, Math.max(5, parseInt(document.getElementById('s-dailygoal').value)||20));
   saveCfg();
   applyCfg();
   document.getElementById('s-success').style.display = 'block';
@@ -3132,110 +3534,648 @@ document.querySelectorAll('.modal-overlay').forEach(ov => {
 // ═══════════════════════════════════════════════════════
 //  CHANGELOG
 // ═══════════════════════════════════════════════════════
+const ALL_FEATURES = [
+  { cat:'🖥️ Uygulama', icon:'📱', text:'Mobil uyumlu — ana ekrana uygulama olarak eklenebilir' },
+  { cat:'🖥️ Uygulama', icon:'🌙', text:'Koyu/Açık tema (sistem varsayılanı + manuel seçim)' },
+  { cat:'🖥️ Uygulama', icon:'🔊', text:'Ses efektleri — doğru, yanlış, rozet, süre sesi' },
+  { cat:'🖥️ Uygulama', icon:'🎊', text:'Konfeti animasyonu — %90 üzeri başarıda' },
+  { cat:'🖥️ Uygulama', icon:'💾', text:'Tek HTML dosyası — internet bağlantısı gerekmez' },
+  { cat:'🖥️ Uygulama', icon:'📲', text:'Alt navigasyon çubuğu — 6 sekme, her ekranda sabit' },
+  { cat:'🖥️ Uygulama', icon:'📐', text:'Tam genişlik konteyner — her ekranda tutarlı hizalama' },
+  { cat:'👤 Profil', icon:'👥', text:'Çoklu kullanıcı profilleri — her biri bağımsız veri' },
+  { cat:'👤 Profil', icon:'🦊', text:'Emoji avatar seçimi (12 seçenek)' },
+  { cat:'👤 Profil', icon:'✏️', text:'Profil düzenleme — isim ve avatar değiştirme' },
+  { cat:'👤 Profil', icon:'🗑️', text:'Profil silme — onay penceresiyle güvenli' },
+  { cat:'👤 Profil', icon:'📊', text:'Profil detay sayfası — kişiye özel tüm istatistikler' },
+  { cat:'👤 Profil', icon:'📈', text:'Son 10 sınav başarı çizgi grafiği (SVG animasyonlu)' },
+  { cat:'👤 Profil', icon:'🍩', text:'Doğru/Yanlış donut (pasta) grafiği' },
+  { cat:'👤 Profil', icon:'📅', text:'Haftalık aktivite çubuk grafiği' },
+  { cat:'👤 Profil', icon:'🕒', text:'Son sınavlar — konu, tarih, skor listesi' },
+  { cat:'👤 Profil', icon:'🏆', text:'Kazanılan rozetler tarihiyle profil detayında' },
+  { cat:'📚 Konular', icon:'✖️', text:'Çarpım tablosu (2–12/20 arası)' },
+  { cat:'📚 Konular', icon:'➕', text:'Toplama işlemi' },
+  { cat:'📚 Konular', icon:'➖', text:'Çıkarma işlemi' },
+  { cat:'📚 Konular', icon:'➗', text:'Bölme işlemi' },
+  { cat:'📚 Konular', icon:'🔢', text:'Kesirler — görsel gösterim, toplama/çıkarma/karşılaştırma' },
+  { cat:'📚 Konular', icon:'🔀', text:'Karışık mod — birden fazla konu aynı anda' },
+  { cat:'🎯 Sınav', icon:'🎯', text:'4 şıklı çoktan seçmeli format' },
+  { cat:'🎯 Sınav', icon:'😊', text:'4 zorluk seviyesi: Kolay, Orta, Zor, Uzman' },
+  { cat:'🎯 Sınav', icon:'⏱️', text:'Ayarlanabilir süre sayacı (animasyonlu bar)' },
+  { cat:'🎯 Sınav', icon:'🔢', text:'Belirli soru sayısı modu (10/20/30/50/∞)' },
+  { cat:'🎯 Sınav', icon:'🔥', text:'Streak (seri) takibi ve ateş animasyonu' },
+  { cat:'🎯 Sınav', icon:'📊', text:'Anlık doğru/yanlış/başarı scorebar' },
+  { cat:'🎯 Sınav', icon:'🏁', text:'Sınavı bitir → sonuç özeti + yanlış listesi' },
+  { cat:'🏆 Rozetler', icon:'🎓', text:'İlk Sınav — ilk sınavını tamamla' },
+  { cat:'🏆 Rozetler', icon:'🌱', text:'İlk 10 — 10 soru çöz' },
+  { cat:'🏆 Rozetler', icon:'💯', text:'Yüzlük — 100 soru çöz' },
+  { cat:'🏆 Rozetler', icon:'⭐', text:'500 Soru — 500 soru çöz' },
+  { cat:'🏆 Rozetler', icon:'🔥', text:'Ateş — 5 üst üste doğru' },
+  { cat:'🏆 Rozetler', icon:'🌟', text:'Yıldız Seri — 10 üst üste doğru' },
+  { cat:'🏆 Rozetler', icon:'💫', text:'Süpernova — 20 üst üste doğru' },
+  { cat:'🏆 Rozetler', icon:'💎', text:'Kusursuz — hiç yanlış yapmadan sınav' },
+  { cat:'🏆 Rozetler', icon:'⚡', text:'Şimşek — ortalama 2sn altında cevap' },
+  { cat:'🏆 Rozetler', icon:'🥇', text:'Altın Başarı — %90 üzeri skor' },
+  { cat:'🏆 Rozetler', icon:'🎯', text:'Günlük Hedef — bugün 20+ soru' },
+  { cat:'🏆 Rozetler', icon:'🌈', text:'Çok Yönlü — tüm konulardan sınav' },
+  { cat:'🏆 Rozetler', icon:'🏃', text:'Maratoncu — tek sınav 50+ soru' },
+  { cat:'📊 İstatistik', icon:'📋', text:'Sınav geçmişi — tarih, saat, konu, skor' },
+  { cat:'📊 İstatistik', icon:'📚', text:'Konu bazlı başarı çubukları' },
+  { cat:'📊 İstatistik', icon:'🎯', text:'Zayıf noktalar listesi (en çok hata yapılanlar)' },
+  { cat:'📊 İstatistik', icon:'🔥', text:'En uzun seri kaydı' },
+  { cat:'📊 İstatistik', icon:'🏆', text:'En iyi sınav skoru' },
+  { cat:'🔐 Güvenlik', icon:'🔐', text:'PIN korumalı ebeveyn ayarları (varsayılan: 4156)' },
+  { cat:'🔐 Güvenlik', icon:'🔒', text:'Çocuk modu — ayarları ve çıkışı kilitler' },
+  { cat:'🔐 Güvenlik', icon:'🔑', text:'PIN değiştirme özelliği' },
+  { cat:'🔐 Güvenlik', icon:'👆', text:'Çocuk modundan çıkış — 3sn uzun basış' },
+  { cat:'⚙️ Ayarlar', icon:'🏷️', text:'Uygulama adı ve alt yazı özelleştirme' },
+  { cat:'⚙️ Ayarlar', icon:'⏳', text:'Cevap sonrası gecikme süresi ayarı' },
+  { cat:'⚙️ Ayarlar', icon:'🌙', text:'Tema — sistem varsayılanı veya manuel seçim' },
+];
+
+const ROADMAP = [
+  { icon:'📝', text:'Açık uçlu mod — klavyeyle cevap gir', status:'plan' },
+  { icon:'🖨️', text:'Sınav sonucunu PDF olarak kaydet/yazdır', status:'plan' },
+  { icon:'👨‍👩‍👧', text:'Ebeveyn paneli — tüm profillerin özet tablosu', status:'plan' },
+  { icon:'🎮', text:'İki oyunculu yarışma modu', status:'plan' },
+  { icon:'📆', text:'Günlük çalışma hatırlatıcısı', status:'plan' },
+  { icon:'🧩', text:'Denklem kurma soruları (x bul)', status:'plan' },
+  { icon:'📉', text:'Aylık gelişim grafiği', status:'plan' },
+  { icon:'🎨', text:'Tema rengi özelleştirme', status:'plan' },
+  { icon:'🌍', text:'Çoklu dil desteği', status:'plan' },
+  { icon:'📡', text:'Bulut yedekleme — farklı cihazlarda aynı veri', status:'plan' },
+];
+
 const CHANGELOG = [
   {
-    version: 'v5.0 — Navigasyon',
+    version: 'v7.0 — Büyük Özellik Güncellemesi',
     date: 'Bugün',
-    type: 'design',
+    type: 'new',
     latest: true,
     features: [
-      { icon: '📱', text: 'Alt navigasyon çubuğu — mobil uygulama gibi her zaman görünür' },
-      { icon: '🏠', text: 'Ana Sayfa, Profiller, Geçmiş, Rozetler, Ayarlar sekmeleri' },
-      { icon: '🆕', text: 'Yenilikler sayfası — tüm geliştirmeleri timeline olarak gör' },
-      { icon: '⚙️', text: 'Ayarlar artık alt çubuktan tek tıkla erişilebilir' },
+      { icon:'⚔️', text:'İki oyunculu yarışma modu — aynı cihazda sıra sıra oyna' },
+      { icon:'📆', text:'Günlük hedef takibi — 30 günlük aktivite takvimi ve seri' },
+      { icon:'👨‍👩‍👧', text:'Ebeveyn paneli — tüm profillerin özet, karşılaştırma ve lider tablosu (PIN korumalı)' },
+      { icon:'📉', text:'Aylık gelişim grafikleri — 6 aylık soru ve başarı trendi' },
+      { icon:'⌨️', text:'Açık uçlu (yaz) soru modu — klavyeyle cevap gir' },
+      { icon:'🎨', text:'8 farklı vurgu rengi seçeneği' },
+      { icon:'🌍', text:'Çoklu dil — Türkçe ve İngilizce' },
+      { icon:'📱', text:'Daha fazla menüsü — tüm özellikler iki tıkta erişilebilir' },
     ]
   },
   {
-    version: 'v4.0 — Profil Detay',
+    version: 'v6.0 — Tema & Düzeltmeler',
     date: 'Dün',
+    type: 'design',
+    latest: false,
+    features: [
+      { icon:'🌙', text:'Sistem tema varsayılanı — cihazınızın koyu/açık ayarını takip eder' },
+      { icon:'📐', text:'Tüm menüler tam genişlik konteynere alındı' },
+      { icon:'🆕', text:'Yenilikler: tüm özellikler özeti + yol haritası bölümü' },
+      { icon:'🔧', text:'Timeline\'da son öğe menünün altında kalmıyor' },
+    ]
+  },
+  {
+    version: 'v5.0 — Navigasyon',
+    date: 'Dün',
+    type: 'design',
+    features: [
+      { icon:'📱', text:'Alt navigasyon çubuğu — her ekranda sabit' },
+      { icon:'🏠', text:'Ana Sayfa, Profiller, Geçmiş, Rozetler, Ayarlar, Yenilikler sekmeleri' },
+      { icon:'⚙️', text:'Ayarlar nav\'dan erişilebilir; çocuk modunda 3sn basılı tut' },
+    ]
+  },
+  {
+    version: 'v4.0 — Profil Detay & Grafikler',
+    date: '2 gün önce',
     type: 'new',
     features: [
-      { icon: '📊', text: 'Profil detay sayfası — tek profil için tüm istatistikler' },
-      { icon: '📈', text: 'Son 10 sınav başarı çizgi grafiği (SVG animasyonlu)' },
-      { icon: '🍩', text: 'Doğru/Yanlış donut (pasta) grafiği' },
-      { icon: '📅', text: 'Haftalık aktivite çubuk grafiği' },
-      { icon: '✏️', text: 'Profil düzenleme — isim ve avatar değiştirme' },
-      { icon: '🗑️', text: 'Profil silme onay penceresiyle güvenli silme' },
-      { icon: '🕒', text: 'Son sınavlar listesi konu, tarih ve skorlarıyla' },
+      { icon:'📊', text:'Profil detay sayfası — kişiye özel istatistikler' },
+      { icon:'📈', text:'Son 10 sınav SVG çizgi grafiği' },
+      { icon:'🍩', text:'Doğru/Yanlış donut grafiği' },
+      { icon:'📅', text:'Haftalık aktivite çubuk grafiği' },
+      { icon:'✏️', text:'Profil düzenleme ve silme' },
     ]
   },
   {
     version: 'v3.0 — Büyük Güncelleme',
-    date: '2 gün önce',
+    date: '3 gün önce',
     type: 'new',
     features: [
-      { icon: '👤', text: 'Çoklu kullanıcı profilleri — her biri ayrı istatistik tutar' },
-      { icon: '📚', text: '5 konu: Çarpım, Toplama, Çıkarma, Bölme, Kesirler' },
-      { icon: '🔢', text: 'Kesirler — görsel kesir gösterimi, toplama/çıkarma/karşılaştırma' },
-      { icon: '🎯', text: '4 zorluk seviyesi: Kolay, Orta, Zor, Uzman' },
-      { icon: '🔢', text: 'Belirli sayıda soru modu (10/20/30/50/Sınırsız)' },
-      { icon: '🔥', text: 'Streak (seri) takibi ve ateş animasyonu' },
-      { icon: '🏆', text: '13 rozet — İlk Sınav\'dan Süpernova\'ya' },
-      { icon: '📊', text: 'İstatistik ekranı — konu bazlı başarı ve zayıf noktalar' },
-      { icon: '🎨', text: 'Koyu/Açık tema desteği' },
-      { icon: '🔊', text: 'Ses efektleri (Web Audio API ile sentezlendi)' },
-      { icon: '🔒', text: 'Çocuk modu + Ebeveyn PIN koruması' },
-      { icon: '🔐', text: 'PIN değiştirme özelliği' },
-      { icon: '🎊', text: 'Konfeti animasyonu %90+ başarılarda' },
+      { icon:'👤', text:'Çoklu kullanıcı profilleri' },
+      { icon:'📚', text:'5 konu + karışık mod + 4 zorluk' },
+      { icon:'🔢', text:'Kesirler — görsel gösterim' },
+      { icon:'🔥', text:'Streak takibi + 13 rozet sistemi' },
+      { icon:'🎨', text:'Koyu/Açık tema, ses efektleri, konfeti' },
+      { icon:'🔒', text:'Çocuk modu + PIN koruması' },
     ]
   },
   {
     version: 'v2.0 — Ayarlar & Geçmiş',
-    date: '3 gün önce',
+    date: '4 gün önce',
     type: 'improve',
     features: [
-      { icon: '⚙️', text: 'Şifreli ayarlar paneli (PIN: 4156)' },
-      { icon: '⏱️', text: 'Ayarlanabilir süre limiti — varsayılan 5 saniye' },
-      { icon: '📋', text: 'Sınav geçmişi — tüm sonuçlar tarih ve saatiyle kaydedilir' },
-      { icon: '🏷️', text: 'Uygulama adı ve alt yazı özelleştirme' },
-      { icon: '🔄', text: 'Ayarlar localStorage\'da kalıcı olarak saklanır' },
+      { icon:'⚙️', text:'Şifreli ayarlar paneli' },
+      { icon:'⏱️', text:'Ayarlanabilir süre limiti' },
+      { icon:'📋', text:'Kalıcı sınav geçmişi kaydı' },
     ]
   },
   {
     version: 'v1.0 — İlk Sürüm',
-    date: '4 gün önce',
+    date: '5 gün önce',
     type: 'new',
     features: [
-      { icon: '✖️', text: 'Sınırsız çarpım tablosu soruları (2–12 arası)' },
-      { icon: '🎯', text: '4 şıklı çoktan seçmeli format' },
-      { icon: '📊', text: 'Anlık doğru/yanlış sayacı ve başarı yüzdesi' },
-      { icon: '🏁', text: 'Sınavı bitir → sonuç özeti ve yanlış listesi' },
-      { icon: '💾', text: 'Tek HTML dosyası — indirip çalıştır' },
+      { icon:'✖️', text:'Sınırsız çarpım tablosu soruları' },
+      { icon:'🎯', text:'4 şıklı çoktan seçmeli format' },
+      { icon:'📊', text:'Anlık skor takibi + yanlış listesi' },
     ]
   },
 ];
 
 function renderChangelog() {
   const container = document.getElementById('changelog-list');
-  container.innerHTML = `<div class="timeline">` + CHANGELOG.map((entry, idx) => {
-    const dotColors = { new: 'var(--green)', improve: 'var(--blue)', fix: 'var(--gold)', design: 'var(--purple)' };
-    const color = dotColors[entry.type] || 'var(--blue)';
-    return `
-      <div class="tl-item">
-        <div class="tl-dot" style="background:${color}"></div>
-        <div class="tl-card">
-          ${entry.latest ? `<div class="tl-latest-tag">✨ Son Güncelleme</div>` : ''}
-          <div class="tl-header">
-            <div class="tl-version">${entry.version}</div>
-            <div class="tl-date">${entry.date}</div>
-          </div>
-          <div class="tl-badge ${entry.type}">${
-            entry.type === 'new' ? '🆕 Yeni Özellik' :
-            entry.type === 'improve' ? '⚡ Geliştirme' :
-            entry.type === 'fix' ? '🔧 Düzeltme' : '🎨 Tasarım'
-          }</div>
-          <ul class="tl-features">
-            ${entry.features.map(f => `
-              <li class="tl-feature">
-                <span class="tl-feature-icon">${f.icon}</span>
+  const dotColors = { new:'var(--green)', improve:'var(--blue)', fix:'var(--gold)', design:'var(--purple)' };
+
+  // Group ALL_FEATURES by category
+  const cats = {};
+  ALL_FEATURES.forEach(f => {
+    if (!cats[f.cat]) cats[f.cat] = [];
+    cats[f.cat].push(f);
+  });
+
+  const allFeaturesHTML = `
+    <div style="margin-bottom:28px;">
+      <div style="font-family:'Fredoka One',sans-serif;font-size:1.15rem;color:var(--text);margin-bottom:6px;">✅ Mevcut Tüm Özellikler</div>
+      <div style="font-size:0.78rem;color:var(--muted);font-weight:700;margin-bottom:14px;">${ALL_FEATURES.length} özellik · ${Object.keys(cats).length} kategori</div>
+      ${Object.entries(cats).map(([cat, feats]) => `
+        <div style="margin-bottom:14px;">
+          <div style="font-family:'Fredoka One',sans-serif;font-size:0.95rem;color:var(--text2);margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid var(--border);">${cat}</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            ${feats.map(f => `
+              <div style="display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;font-weight:600;color:var(--text2);">
+                <span style="flex-shrink:0;">${f.icon}</span>
                 <span>${f.text}</span>
-              </li>
+              </div>
             `).join('')}
-          </ul>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div style="margin-bottom:28px;">
+      <div style="font-family:'Fredoka One',sans-serif;font-size:1.15rem;color:var(--text);margin-bottom:6px;">🗺️ Yol Haritası</div>
+      <div style="font-size:0.78rem;color:var(--muted);font-weight:700;margin-bottom:14px;">Planlanan geliştirmeler</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        ${ROADMAP.map(r => `
+          <div style="display:flex;align-items:flex-start;gap:10px;background:var(--card);border:1px dashed var(--border);border-radius:10px;padding:10px 13px;">
+            <span style="font-size:1rem;flex-shrink:0;">${r.icon}</span>
+            <span style="font-size:0.85rem;font-weight:600;color:var(--text2);">${r.text}</span>
+            <span style="margin-left:auto;font-size:0.65rem;font-weight:800;color:var(--purple);background:rgba(168,85,247,0.1);padding:2px 8px;border-radius:99px;white-space:nowrap;align-self:center;">Planlı</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div style="font-family:'Fredoka One',sans-serif;font-size:1.15rem;color:var(--text);margin-bottom:14px;">📅 Sürüm Geçmişi</div>
+  `;
+
+  const timelineHTML = `<div class="timeline">` +
+    CHANGELOG.map((entry) => {
+      const color = dotColors[entry.type] || 'var(--blue)';
+      return `
+        <div class="tl-item">
+          <div class="tl-dot" style="background:${color}"></div>
+          <div class="tl-card">
+            ${entry.latest ? `<div class="tl-latest-tag">✨ Son Güncelleme</div>` : ''}
+            <div class="tl-header">
+              <div class="tl-version">${entry.version}</div>
+              <div class="tl-date">${entry.date}</div>
+            </div>
+            <div class="tl-badge ${entry.type}">${
+              entry.type === 'new' ? '🆕 Yeni' :
+              entry.type === 'improve' ? '⚡ Geliştirme' :
+              entry.type === 'fix' ? '🔧 Düzeltme' : '🎨 Tasarım'
+            }</div>
+            <ul class="tl-features">
+              ${entry.features.map(f => `
+                <li class="tl-feature">
+                  <span class="tl-feature-icon">${f.icon}</span>
+                  <span>${f.text}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        </div>
+      `;
+    }).join('') + `</div>`;
+
+  container.innerHTML = allFeaturesHTML + timelineHTML;
+}
+
+
+// ═══════════════════════════════════════════════════════
+//  MORE MENU
+// ═══════════════════════════════════════════════════════
+function toggleMoreMenu() {
+  const m = document.getElementById('more-menu');
+  const showing = m.style.display !== 'none';
+  m.style.display = showing ? 'none' : 'block';
+  if (!showing) {
+    // Close on outside click
+    setTimeout(() => {
+      document.addEventListener('click', function closeMore(e) {
+        if (!m.contains(e.target) && e.target.id !== 'nav-more') {
+          m.style.display = 'none';
+        }
+        document.removeEventListener('click', closeMore);
+      });
+    }, 50);
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  VERSUS (2 PLAYER) MODE
+// ═══════════════════════════════════════════════════════
+let vsState = {
+  p1: null, p2: null,
+  p1pts: 0, p2pts: 0,
+  currentTurn: 1, // 1 or 2
+  qCount: 10, total: 0,
+  topic: 'carpim',
+  currentQ: null,
+  answered: false,
+  timerInterval: null,
+  nextTimer: null
+};
+
+function populateVsSelects() {
+  const profiles = getProfiles();
+  ['vs-p1','vs-p2'].forEach((id,pi) => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    sel.innerHTML = profiles.map((p,i) =>
+      `<option value="${p.id}" ${i===pi?'selected':''}>${p.avatar} ${p.name}</option>`
+    ).join('');
+  });
+}
+
+function startVersus() {
+  const profiles = getProfiles();
+  const p1id = document.getElementById('vs-p1').value;
+  const p2id = document.getElementById('vs-p2').value;
+  if (p1id === p2id) { showNotif('❗','Farklı profil seç!','accent'); return; }
+  vsState.p1 = profiles.find(p=>p.id===p1id);
+  vsState.p2 = profiles.find(p=>p.id===p2id);
+  vsState.p1pts = 0; vsState.p2pts = 0;
+  vsState.currentTurn = 1;
+  vsState.total = 0;
+  vsState.qCount = parseInt(document.getElementById('vs-qcount').value)||10;
+  vsState.topic = document.getElementById('vs-topic').value;
+  document.getElementById('versus-setup').style.display = 'none';
+  document.getElementById('versus-game').style.display = 'block';
+  document.getElementById('versus-result').style.display = 'none';
+  document.getElementById('vs-p1-name').textContent = vsState.p1.avatar+' '+vsState.p1.name;
+  document.getElementById('vs-p2-name').textContent = vsState.p2.avatar+' '+vsState.p2.name;
+  document.getElementById('vs-final-p1-name').textContent = vsState.p1.name;
+  document.getElementById('vs-final-p2-name').textContent = vsState.p2.name;
+  vsLoadQuestion();
+}
+
+function restartVersus() {
+  document.getElementById('versus-setup').style.display = 'block';
+  document.getElementById('versus-game').style.display = 'none';
+  document.getElementById('versus-result').style.display = 'none';
+}
+
+function vsLoadQuestion() {
+  clearInterval(vsState.timerInterval);
+  clearTimeout(vsState.nextTimer);
+  if (vsState.total >= vsState.qCount) { vsShowResult(); return; }
+  vsState.answered = false;
+  vsState.currentQ = genQuestion(vsState.topic, 'orta');
+  vsState.currentQ.topic = vsState.topic;
+  vsState.total++;
+
+  const turnP = vsState.currentTurn === 1 ? vsState.p1 : vsState.p2;
+  const color = vsState.currentTurn === 1 ? 'var(--blue)' : 'var(--accent)';
+  document.getElementById('vs-turn-label').textContent = `${turnP.avatar} ${turnP.name.toUpperCase()}'İN SIRASI`;
+  document.getElementById('vs-turn-label').style.color = color;
+  document.getElementById('vs-remaining').textContent = `${vsState.total} / ${vsState.qCount}`;
+  document.getElementById('vs-p1-pts').textContent = vsState.p1pts;
+  document.getElementById('vs-p2-pts').textContent = vsState.p2pts;
+  document.getElementById('vs-feedback').textContent = '';
+  document.getElementById('vs-feedback').className = 'feedback-msg';
+
+  // Render question
+  const qtEl = document.getElementById('vs-question');
+  const q = vsState.currentQ;
+  qtEl.innerHTML = `<span class="hl">${q.q[0]}</span> <span class="op">${q.q[1]}</span> <span class="hl">${q.q[2]}</span> <span class="op">=</span> ?`;
+
+  const choices = genWrongChoices(q.ansStr, vsState.topic, 'orta');
+  if (!choices.includes(q.ansStr)) { choices[0] = q.ansStr; }
+  const sc = shuffle([...new Set([q.ansStr, ...choices])]).slice(0,4);
+  document.getElementById('vs-choices').innerHTML = sc.map(val =>
+    `<button class="choice-btn" data-val="${val}" onclick="vsPick('${val}',this)">${val}</button>`
+  ).join('');
+
+  // Timer
+  let tLeft = cfg.timerSec;
+  renderVsTimer(tLeft);
+  vsState.timerInterval = setInterval(() => {
+    tLeft -= 0.1;
+    if (tLeft <= 0) { clearInterval(vsState.timerInterval); vsTimeout(); }
+    else renderVsTimer(tLeft);
+  }, 100);
+}
+
+function renderVsTimer(t) {
+  const pct = t / cfg.timerSec * 100;
+  const danger = t <= 2;
+  document.getElementById('vs-timer-fill').style.width = pct + '%';
+  document.getElementById('vs-timer-fill').className = 'timer-fill' + (danger ? ' danger' : '');
+  document.getElementById('vs-timer-num').textContent = Math.ceil(t);
+}
+
+function vsPick(val, btn) {
+  if (vsState.answered) return;
+  vsState.answered = true;
+  clearInterval(vsState.timerInterval);
+  document.querySelectorAll('#vs-choices .choice-btn').forEach(b => b.disabled = true);
+  const q = vsState.currentQ;
+  const fb = document.getElementById('vs-feedback');
+  if (val === q.ansStr) {
+    btn.classList.add('correct');
+    fb.textContent = '✓ Doğru! +1 puan';
+    fb.className = 'feedback-msg ok';
+    if (vsState.currentTurn === 1) vsState.p1pts++; else vsState.p2pts++;
+    playSound('correct');
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '✗ Yanlış! Doğru: ' + q.ansStr;
+    fb.className = 'feedback-msg fail';
+    document.querySelectorAll('#vs-choices .choice-btn').forEach(b => { if (b.dataset.val === q.ansStr) b.classList.add('reveal'); });
+    playSound('wrong');
+  }
+  vsState.currentTurn = vsState.currentTurn === 1 ? 2 : 1;
+  vsState.nextTimer = setTimeout(vsLoadQuestion, cfg.nextDelay * 1000);
+}
+
+function vsTimeout() {
+  if (vsState.answered) return;
+  vsState.answered = true;
+  document.querySelectorAll('#vs-choices .choice-btn').forEach(b => { b.disabled = true; if (b.dataset.val === vsState.currentQ.ansStr) b.classList.add('reveal'); });
+  document.getElementById('vs-feedback').textContent = '⏰ Süre!';
+  document.getElementById('vs-feedback').className = 'feedback-msg timeout';
+  vsState.currentTurn = vsState.currentTurn === 1 ? 2 : 1;
+  vsState.nextTimer = setTimeout(vsLoadQuestion, cfg.nextDelay * 1000);
+}
+
+function vsShowResult() {
+  clearInterval(vsState.timerInterval);
+  document.getElementById('versus-game').style.display = 'none';
+  document.getElementById('versus-result').style.display = 'block';
+  document.getElementById('vs-final-p1-pts').textContent = vsState.p1pts;
+  document.getElementById('vs-final-p2-pts').textContent = vsState.p2pts;
+  if (vsState.p1pts > vsState.p2pts) {
+    document.getElementById('vs-winner-emoji').textContent = vsState.p1.avatar;
+    document.getElementById('vs-winner-text').textContent = vsState.p1.name + ' Kazandı! 🏆';
+  } else if (vsState.p2pts > vsState.p1pts) {
+    document.getElementById('vs-winner-emoji').textContent = vsState.p2.avatar;
+    document.getElementById('vs-winner-text').textContent = vsState.p2.name + ' Kazandı! 🏆';
+  } else {
+    document.getElementById('vs-winner-emoji').textContent = '🤝';
+    document.getElementById('vs-winner-text').textContent = 'Berabere!';
+  }
+  spawnConfetti();
+  playSound('badge');
+}
+
+// ═══════════════════════════════════════════════════════
+//  DAILY GOAL
+// ═══════════════════════════════════════════════════════
+function renderDailyScreen() {
+  if (!activeProfile) { document.getElementById('daily-content').innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-weight:700;">Önce bir profil seç</div>'; return; }
+  const pd = getProfileData(activeProfile.id);
+  const today = new Date().toLocaleDateString('tr-TR');
+  const todayHistory = (pd.history||[]).filter(h => h.date === today);
+  const todayQ = todayHistory.reduce((s,h) => s+h.total, 0);
+  const todayCorrect = todayHistory.reduce((s,h) => s+h.correct, 0);
+  const goal = cfg.dailyGoal || 20;
+  const pct = Math.min(100, Math.round(todayQ / goal * 100));
+  const circ = 283; // 2*pi*45 ~= 283
+  const filled = circ * pct / 100;
+
+  // Calendar: last 30 days
+  const actDays = {};
+  (pd.history||[]).forEach(h => { actDays[h.date] = (actDays[h.date]||0) + h.total; });
+
+  const calHTML = (() => {
+    const days = [];
+    for (let i=29; i>=0; i--) {
+      const d = new Date(); d.setDate(d.getDate()-i);
+      const ds = d.toLocaleDateString('tr-TR');
+      const isToday = i===0;
+      const hasActivity = actDays[ds] >= goal;
+      const hasPartial = actDays[ds] > 0 && actDays[ds] < goal;
+      let cls = 'sc-day empty';
+      if (isToday) cls = 'sc-day today';
+      else if (hasActivity) cls = 'sc-day active';
+      else if (hasPartial) cls = 'sc-day' + ' style="background:rgba(79,142,247,0.3)"';
+      days.push(`<div class="${cls}">${d.getDate()}</div>`);
+    }
+    return days.join('');
+  })();
+
+  // Streak calc
+  let streak = 0;
+  for (let i=0; i<365; i++) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const ds = d.toLocaleDateString('tr-TR');
+    if ((actDays[ds]||0) >= goal) streak++;
+    else if (i > 0) break;
+  }
+
+  document.getElementById('daily-content').innerHTML = `
+    <div class="card card-accent mb12" style="text-align:center;">
+      <div style="font-family:'Fredoka One',sans-serif;font-size:1rem;margin-bottom:4px;">${activeProfile.avatar} ${activeProfile.name}</div>
+      <div style="font-size:0.78rem;color:var(--muted);font-weight:700;margin-bottom:16px;">Günlük hedef: ${goal} soru</div>
+      <div class="goal-circle-wrap">
+        <div class="goal-circle">
+          <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="var(--border)" stroke-width="8"/>
+            <circle cx="50" cy="50" r="45" fill="none" stroke="var(--blue)" stroke-width="8"
+              stroke-dasharray="${filled.toFixed(1)} ${circ}" stroke-linecap="round"
+              style="transition:stroke-dasharray 1s ease"/>
+          </svg>
+          <div class="goal-circle-center">
+            <span class="goal-num">${todayQ}</span>
+            <span class="goal-sub">/ ${goal}</span>
+          </div>
         </div>
       </div>
-    `;
-  }).join('') + `</div>`;
+      <div style="display:flex;justify-content:center;gap:20px;margin-bottom:16px;">
+        <div style="text-align:center;"><div style="font-family:'Fredoka One',sans-serif;font-size:1.4rem;color:var(--green)">${todayCorrect}</div><div style="font-size:0.65rem;color:var(--muted);font-weight:700;">Doğru</div></div>
+        <div style="text-align:center;"><div style="font-family:'Fredoka One',sans-serif;font-size:1.4rem;color:var(--gold)">${streak}🔥</div><div style="font-size:0.65rem;color:var(--muted);font-weight:700;">Gün Serisi</div></div>
+        <div style="text-align:center;"><div style="font-family:'Fredoka One',sans-serif;font-size:1.4rem;color:var(--blue)">${pct}%</div><div style="font-size:0.65rem;color:var(--muted);font-weight:700;">Tamamlandı</div></div>
+      </div>
+      ${pct >= 100 ? '<div style="background:rgba(15,196,126,0.15);border:1px solid rgba(15,196,126,0.3);border-radius:12px;padding:10px;color:var(--green);font-weight:800;margin-bottom:12px;">🎉 Günlük hedef tamamlandı!</div>' : ''}
+      <button class="btn btn-primary btn-full" onclick="navGo('home')">🚀 Devam Et</button>
+    </div>
+    <div class="card card-accent">
+      <div class="section-title mb8">📅 Son 30 Gün</div>
+      <div class="streak-calendar">${calHTML}</div>
+      <div style="display:flex;gap:10px;margin-top:8px;font-size:0.7rem;font-weight:700;color:var(--muted);">
+        <div style="display:flex;align-items:center;gap:4px;"><div style="width:10px;height:10px;background:var(--green);border-radius:3px;"></div>Hedef tamamlandı</div>
+        <div style="display:flex;align-items:center;gap:4px;"><div style="width:10px;height:10px;background:var(--blue);border-radius:3px;"></div>Bugün</div>
+      </div>
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════
+//  PARENT PANEL
+// ═══════════════════════════════════════════════════════
+function renderParentPanel() {
+  const profiles = getProfiles();
+  if (profiles.length === 0) {
+    document.getElementById('parent-summary-grid').innerHTML = '<div style="grid-column:span 2;text-align:center;color:var(--muted);padding:20px;font-weight:700;">Henüz profil yok</div>';
+    return;
+  }
+
+  // Summary cards
+  document.getElementById('parent-summary-grid').innerHTML = profiles.map(p => {
+    const pd = getProfileData(p.id);
+    const totalCorrect = (pd.topicStats && pd.topicStats.totalCorrect)||0;
+    const pct = pd.totalQuestions>0 ? Math.round(totalCorrect/pd.totalQuestions*100) : 0;
+    const today = new Date().toLocaleDateString('tr-TR');
+    const todayQ = (pd.history||[]).filter(h=>h.date===today).reduce((s,h)=>s+h.total,0);
+    return `<div class="parent-profile-card" onclick="openProfileDetail('${p.id}')">
+      <div style="font-size:2rem;margin-bottom:6px;">${p.avatar}</div>
+      <div style="font-family:'Fredoka One',sans-serif;font-size:1rem;margin-bottom:4px;">${p.name}</div>
+      <div style="font-size:0.72rem;color:var(--muted);font-weight:700;">${pd.totalQuestions||0} soru</div>
+      <div style="font-family:'Fredoka One',sans-serif;font-size:1.3rem;color:${pct>=70?'var(--green)':pct>=40?'var(--gold)':'var(--accent)'}">%${pct}</div>
+      <div style="font-size:0.65rem;color:var(--muted);font-weight:700;">Bugün: ${todayQ} soru</div>
+    </div>`;
+  }).join('');
+
+  // Compare bars
+  document.getElementById('parent-compare-bars').innerHTML = profiles.map(p => {
+    const pd = getProfileData(p.id);
+    const totalCorrect = (pd.topicStats && pd.topicStats.totalCorrect)||0;
+    const pct = pd.totalQuestions>0 ? Math.round(totalCorrect/pd.totalQuestions*100) : 0;
+    return `<div class="topic-stats-bar">
+      <div class="tsb-label"><span>${p.avatar} ${p.name}</span><span style="color:var(--blue)">%${pct} · ${pd.totalQuestions||0} soru</span></div>
+      <div class="tsb-track"><div class="tsb-fill" style="width:${pct}%;background:var(--blue)"></div></div>
+    </div>`;
+  }).join('');
+
+  // Weekly activity per profile
+  const weekHTML = profiles.map(p => {
+    const pd = getProfileData(p.id);
+    const now = new Date();
+    let weekTotal = 0;
+    for (let i=0; i<7; i++) {
+      const d = new Date(); d.setDate(d.getDate()-i);
+      const ds = d.toLocaleDateString('tr-TR');
+      weekTotal += (pd.history||[]).filter(h=>h.date===ds).reduce((s,h)=>s+h.total,0);
+    }
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">
+      <span style="font-weight:800;">${p.avatar} ${p.name}</span>
+      <span style="font-family:'Space Mono',monospace;font-size:0.85rem;color:var(--blue);font-weight:700;">${weekTotal} soru</span>
+    </div>`;
+  }).join('');
+  document.getElementById('parent-weekly').innerHTML = weekHTML;
+
+  // Leaderboard
+  const lb = profiles.map(p => {
+    const pd = getProfileData(p.id);
+    const totalCorrect = (pd.topicStats && pd.topicStats.totalCorrect)||0;
+    const pct = pd.totalQuestions>0 ? Math.round(totalCorrect/pd.totalQuestions*100) : 0;
+    return { p, pct, total: pd.totalQuestions||0, badges: (pd.badges||[]).length };
+  }).sort((a,b) => b.pct-a.pct || b.total-a.total);
+
+  const medals = ['🥇','🥈','🥉'];
+  document.getElementById('parent-leaderboard').innerHTML = lb.map((item,i) => `
+    <div class="lb-item">
+      <div class="lb-rank">${medals[i]||'#'+(i+1)}</div>
+      <div class="lb-avatar">${item.p.avatar}</div>
+      <div class="lb-name">${item.p.name}</div>
+      <div style="text-align:right;">
+        <div class="lb-score">%${item.pct}</div>
+        <div style="font-size:0.65rem;color:var(--muted);font-weight:700;">${item.total} soru · ${item.badges} rozet</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+//  MONTHLY CHART
+// ═══════════════════════════════════════════════════════
+function renderMonthlyScreen() {
+  if (!activeProfile) { document.getElementById('monthly-content').innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-weight:700;">Önce bir profil seç</div>'; return; }
+  const pd = getProfileData(activeProfile.id);
+  const now = new Date();
+
+  // Build monthly data for last 6 months
+  const months = [];
+  for (let i=5; i>=0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+    const monthKey = d.getMonth()+1 + '/' + d.getFullYear();
+    const shortName = d.toLocaleDateString('tr-TR', {month:'short'});
+    let total = 0, correct = 0;
+    (pd.history||[]).forEach(h => {
+      if (!h.date) return;
+      const parts = h.date.split('.');
+      if (parts.length<3) return;
+      const hd = new Date(parseInt(parts[2]), parseInt(parts[1])-1, parseInt(parts[0]));
+      if (hd.getMonth() === d.getMonth() && hd.getFullYear() === d.getFullYear()) {
+        total += h.total; correct += h.correct;
+      }
+    });
+    const pct = total>0 ? Math.round(correct/total*100) : 0;
+    months.push({ name:shortName, total, correct, pct });
+  }
+
+  const maxTotal = Math.max(...months.map(m=>m.total), 1);
+  const colors = ['var(--blue)','var(--green)','var(--purple)','var(--gold)','var(--accent)','var(--cyan)'];
+
+  const barsHTML = months.map((m,i) => `
+    <div class="monthly-bar-row">
+      <div class="monthly-month-label">${m.name}</div>
+      <div class="monthly-bar-track">
+        <div class="monthly-bar-fill" style="width:${Math.round(m.total/maxTotal*100)}%;background:${colors[i]}"></div>
+      </div>
+      <div class="monthly-pct-label" style="color:${colors[i]}">${m.total>0?m.total+' soru':'—'}</div>
+    </div>
+  `).join('');
+
+  const scoreHTML = months.map((m,i) => `
+    <div class="monthly-bar-row">
+      <div class="monthly-month-label">${m.name}</div>
+      <div class="monthly-bar-track">
+        <div class="monthly-bar-fill" style="width:${m.pct}%;background:${m.pct>=70?'var(--green)':m.pct>=40?'var(--gold)':'var(--accent)'}"></div>
+      </div>
+      <div class="monthly-pct-label" style="color:${m.pct>=70?'var(--green)':m.pct>=40?'var(--gold)':'var(--accent)'}">${m.total>0?'%'+m.pct:'—'}</div>
+    </div>
+  `).join('');
+
+  const totalQ6 = months.reduce((s,m)=>s+m.total,0);
+  const avgPct = months.filter(m=>m.total>0).length > 0 
+    ? Math.round(months.filter(m=>m.total>0).reduce((s,m)=>s+m.pct,0)/months.filter(m=>m.total>0).length) : 0;
+
+  document.getElementById('monthly-content').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+      <div class="stat-card"><span class="sv" style="color:var(--blue)">${totalQ6}</span><span class="sl">Son 6 Ay Toplam</span></div>
+      <div class="stat-card"><span class="sv" style="color:var(--gold)">${avgPct?'%'+avgPct:'—'}</span><span class="sl">Ort. Başarı</span></div>
+    </div>
+    <div class="card card-accent mb12">
+      <div class="section-title mb12">📊 Aylık Soru Sayısı</div>
+      ${barsHTML}
+    </div>
+    <div class="card card-accent mb12">
+      <div class="section-title mb12">🎯 Aylık Başarı Oranı</div>
+      ${scoreHTML}
+    </div>
+  `;
 }
 
 // ═══════════════════════════════════════════════════════
@@ -3249,6 +4189,13 @@ function init() {
     const profiles = [{ id: 'default', name: 'Öğrenci', avatar: '🦊' }];
     saveProfiles(profiles);
     renderProfiles();
+  }
+
+  // Listen for system theme changes
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      if (!cfg.theme) applyCfg(); // only if user hasn't manually set
+    });
   }
 
   // Show nav and set active tab
