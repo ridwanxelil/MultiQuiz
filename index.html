@@ -1034,7 +1034,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       <p>Profilini seç ve sınava başla</p>
     </div>
     <div class="profile-grid" id="profile-grid"></div>
-    <button class="btn btn-ghost btn-full mt8" onclick="openSettingsFromProfile()">⚙️ Ebeveyn Ayarları</button>
+    <button class="btn btn-ghost btn-full mt8" onclick="openSettingsFromProfile()" onpointerdown="startKidsUnlock()" onpointerup="cancelKidsUnlock()" onpointerleave="cancelKidsUnlock()">⚙️ Ebeveyn Ayarları</button>
   </div>
 </div>
 
@@ -2736,8 +2736,21 @@ function checkPin() {
   }
 }
 
+let kidsUnlockTimer = null;
+
+function startKidsUnlock() {
+  if (!cfg.kidsMode) return;
+  kidsUnlockTimer = setTimeout(() => {
+    openPinFor(openSettings);
+  }, 3000);
+}
+
+function cancelKidsUnlock() {
+  clearTimeout(kidsUnlockTimer);
+}
+
 function openSettingsFromProfile() {
-  if (cfg.kidsMode) { showNotif('🔒','Çocuk modu aktif!','accent'); return; }
+  if (cfg.kidsMode) { showNotif('🔒','3 sn basılı tut!','accent'); return; }
   openPinFor(openSettings);
 }
 
