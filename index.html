@@ -996,7 +996,133 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 .rei-right { display: flex; align-items: center; gap: 8px; }
 .rei-pct { font-family: 'Fredoka One', sans-serif; font-size: 1.2rem; }
 
-/* QUESTION COUNT BADGE */
+/* ===== CHANGELOG TIMELINE ===== */
+.timeline {
+  position: relative;
+  padding-left: 28px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--blue), var(--purple), var(--border));
+  border-radius: 99px;
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 28px;
+  animation: fadeUp 0.4s ease both;
+}
+
+.tl-item:nth-child(1) { animation-delay: 0.05s; }
+.tl-item:nth-child(2) { animation-delay: 0.1s; }
+.tl-item:nth-child(3) { animation-delay: 0.15s; }
+.tl-item:nth-child(4) { animation-delay: 0.2s; }
+.tl-item:nth-child(5) { animation-delay: 0.25s; }
+.tl-item:nth-child(6) { animation-delay: 0.3s; }
+.tl-item:nth-child(7) { animation-delay: 0.35s; }
+.tl-item:nth-child(8) { animation-delay: 0.4s; }
+
+.tl-dot {
+  position: absolute;
+  left: -23px;
+  top: 14px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--card);
+  z-index: 1;
+}
+
+.tl-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px 18px;
+  transition: all 0.2s;
+}
+
+.tl-card:hover { transform: translateX(3px); border-color: var(--blue); }
+
+.tl-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.tl-version {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.tl-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+  font-weight: 700;
+  white-space: nowrap;
+  padding-top: 3px;
+}
+
+.tl-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  margin-bottom: 10px;
+}
+
+.tl-badge.new { background: rgba(15,196,126,0.15); color: var(--green); border: 1px solid rgba(15,196,126,0.3); }
+.tl-badge.improve { background: rgba(79,142,247,0.15); color: var(--blue); border: 1px solid rgba(79,142,247,0.3); }
+.tl-badge.fix { background: rgba(245,166,35,0.15); color: var(--gold); border: 1px solid rgba(245,166,35,0.3); }
+.tl-badge.design { background: rgba(168,85,247,0.15); color: var(--purple); border: 1px solid rgba(168,85,247,0.3); }
+
+.tl-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tl-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text2);
+  line-height: 1.4;
+}
+
+.tl-feature-icon {
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.tl-latest-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--gold);
+  background: rgba(245,166,35,0.1);
+  border: 1px solid rgba(245,166,35,0.3);
+  padding: 3px 10px;
+  border-radius: 99px;
+  margin-bottom: 12px;
+}
+
 .remaining-badge {
   font-family: 'Space Mono', monospace;
   font-size: 0.72rem;
@@ -1027,14 +1153,13 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <!-- ============================================================ -->
 <!--  SCREEN 1: PROFILE SELECT                                     -->
 <!-- ============================================================ -->
-<div class="screen active" id="screen-profiles">
+<div class="screen active has-bottom-nav" id="screen-profiles">
   <div style="width:100%;max-width:640px;padding:30px 16px 16px;">
     <div class="profile-hero">
       <h1>🧮 Matematik</h1>
       <p>Profilini seç ve sınava başla</p>
     </div>
     <div class="profile-grid" id="profile-grid"></div>
-    <button class="btn btn-ghost btn-full mt8" onclick="openSettingsFromProfile()" onpointerdown="startKidsUnlock()" onpointerup="cancelKidsUnlock()" onpointerleave="cancelKidsUnlock()">⚙️ Ebeveyn Ayarları</button>
   </div>
 </div>
 
@@ -1042,7 +1167,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <!-- ============================================================ -->
 <!--  SCREEN: PROFILE DETAIL                                       -->
 <!-- ============================================================ -->
-<div class="screen" id="screen-profile-detail">
+<div class="screen has-bottom-nav" id="screen-profile-detail">
   <div style="width:100%;max-width:640px;padding:0 0 20px;">
 
     <!-- HERO -->
@@ -1364,24 +1489,43 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   </div>
 </div>
 
-<!-- BOTTOM NAV (shown only on main screens) -->
-<div class="bottom-nav" id="bottom-nav" style="display:none">
-  <button class="nav-btn active" id="nav-quiz" onclick="showMainScreen('quiz')">
-    <span class="nav-icon">✏️</span>
-    <span class="nav-label">Sınav</span>
+<!-- BOTTOM NAV (global) -->
+<div class="bottom-nav" id="bottom-nav">
+  <button class="nav-btn" id="nav-home" onclick="navGo('home')">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">Ana Sayfa</span>
   </button>
-  <button class="nav-btn" id="nav-stats" onclick="showMainScreen('stats')">
-    <span class="nav-icon">📊</span>
-    <span class="nav-label">İstatistik</span>
+  <button class="nav-btn" id="nav-profiles" onclick="navGo('profiles')">
+    <span class="nav-icon">👤</span>
+    <span class="nav-label">Profiller</span>
   </button>
-  <button class="nav-btn" id="nav-history" onclick="showMainScreen('history')">
+  <button class="nav-btn" id="nav-history" onclick="navGo('history')">
     <span class="nav-icon">📋</span>
     <span class="nav-label">Geçmiş</span>
   </button>
-  <button class="nav-btn" id="nav-badges" onclick="showMainScreen('badges')">
+  <button class="nav-btn" id="nav-badges" onclick="navGo('badges')">
     <span class="nav-icon">🏆</span>
     <span class="nav-label">Rozetler</span>
   </button>
+  <button class="nav-btn" id="nav-settings" onclick="navGo('settings')" onpointerdown="startKidsUnlock()" onpointerup="cancelKidsUnlock()" onpointerleave="cancelKidsUnlock()">
+    <span class="nav-icon">⚙️</span>
+    <span class="nav-label">Ayarlar</span>
+  </button>
+  <button class="nav-btn" id="nav-changelog" onclick="navGo('changelog')">
+    <span class="nav-icon">🆕</span>
+    <span class="nav-label">Yenilikler</span>
+  </button>
+</div>
+
+<!-- ============================================================ -->
+<!--  SCREEN: CHANGELOG / YENİLİKLER                               -->
+<!-- ============================================================ -->
+<div class="screen has-bottom-nav" id="screen-changelog">
+  <div style="width:100%;max-width:640px;padding-top:20px;">
+    <div style="font-family:'Fredoka One',sans-serif;font-size:1.6rem;margin-bottom:4px;">🆕 Yenilikler</div>
+    <div style="font-size:0.8rem;color:var(--muted);font-weight:700;margin-bottom:24px;">Uygulama geliştirme günlüğü</div>
+    <div id="changelog-list"></div>
+  </div>
 </div>
 
 <!-- ============================================================ -->
@@ -1615,19 +1759,16 @@ function selectProfile(p) {
   gotoScreen('topic');
   document.getElementById('topic-screen-profile-name').textContent = p.avatar + ' ' + p.name;
   updateTopicBests();
-  showBottomNav(false);
 }
 
 function startFromDetail() {
   gotoScreen('topic');
   document.getElementById('topic-screen-profile-name').textContent = activeProfile.avatar + ' ' + activeProfile.name;
   updateTopicBests();
-  showBottomNav(false);
 }
 
 function backToProfiles() {
   gotoScreen('profiles');
-  showBottomNav(false);
 }
 
 function confirmDeleteProfile(pid) {
@@ -1662,7 +1803,6 @@ function openProfileDetail(pid) {
   activeProfile = p;
   renderProfileDetail(p);
   gotoScreen('profile-detail');
-  showBottomNav(false);
 }
 
 function renderProfileDetail(p) {
@@ -2147,7 +2287,6 @@ function startQuiz() {
   document.getElementById('quiz-topic-badge').textContent = selectedTopics.map(t => topicLabels[t]).join(' · ');
 
   gotoScreen('quiz');
-  showBottomNav(false);
   loadQuestion();
 }
 
@@ -2162,7 +2301,6 @@ function backToTopic() {
   clearInterval(qState.timerInterval);
   clearTimeout(qState.nextTimer);
   gotoScreen('topic');
-  showBottomNav(false);
 }
 
 function loadQuestion() {
@@ -2666,33 +2804,72 @@ function renderHistory() {
 // ═══════════════════════════════════════════════════════
 let activeMainTab = 'quiz';
 
-function showMainScreen(tab) {
-  activeMainTab = tab;
-  ['quiz','stats','history','badges'].forEach(t => {
-    const navBtn = document.getElementById('nav-'+t);
-    if (navBtn) navBtn.classList.toggle('active', t === tab);
-  });
+// Screens that show the bottom nav
+const NAV_SCREENS = ['profiles','topic','stats','history','badges','profile-detail'];
+// Screens that hide the bottom nav
+const FULLSCREEN = ['quiz','results'];
 
-  if (tab === 'quiz') {
-    gotoScreen('topic');
-    showBottomNav(true);
-  } else if (tab === 'stats') {
-    gotoScreen('stats');
-    showBottomNav(true);
-    renderStats();
+function navGo(tab) {
+  if (tab === 'settings') {
+    openSettingsFromProfile();
+    return;
+  }
+
+  activeMainTab = tab;
+  updateNavActive(tab);
+
+  if (tab === 'home') {
+    if (activeProfile) {
+      gotoScreen('topic');
+    } else {
+      gotoScreen('profiles');
+      updateNavActive('profiles');
+    }
+  } else if (tab === 'profiles') {
+    gotoScreen('profiles');
+    renderProfiles();
   } else if (tab === 'history') {
     gotoScreen('history');
-    showBottomNav(true);
     renderHistory();
   } else if (tab === 'badges') {
     gotoScreen('badges');
-    showBottomNav(true);
     renderAllBadges();
+  } else if (tab === 'changelog') {
+    gotoScreen('changelog');
+    renderChangelog();
   }
 }
 
+function updateNavActive(tab) {
+  ['home','profiles','history','badges','settings','changelog'].forEach(t => {
+    const btn = document.getElementById('nav-'+t);
+    if (btn) btn.classList.toggle('active', t === tab);
+  });
+}
+
+// Keep old showMainScreen for internal calls
+function showMainScreen(tab) {
+  navGo(tab === 'quiz' ? 'home' : tab);
+}
+
 function showBottomNav(show) {
-  document.getElementById('bottom-nav').style.display = show ? 'flex' : 'none';
+  // Always show — nav is always visible except during quiz/results
+  const screen = document.querySelector('.screen.active');
+  const id = screen ? screen.id.replace('screen-','') : '';
+  document.getElementById('bottom-nav').style.display = FULLSCREEN.includes(id) ? 'none' : 'flex';
+}
+
+function syncNav() {
+  const screen = document.querySelector('.screen.active');
+  const id = screen ? screen.id.replace('screen-','') : '';
+  const isFullscreen = FULLSCREEN.includes(id);
+  document.getElementById('bottom-nav').style.display = isFullscreen ? 'none' : 'flex';
+  if (id === 'profiles') updateNavActive('profiles');
+  else if (id === 'topic') updateNavActive('home');
+  else if (id === 'history') updateNavActive('history');
+  else if (id === 'badges') updateNavActive('badges');
+  else if (id === 'profile-detail') updateNavActive('profiles');
+  else if (id === 'changelog') updateNavActive('changelog');
 }
 
 // ═══════════════════════════════════════════════════════
@@ -2939,6 +3116,7 @@ function gotoScreen(name) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   const el = document.getElementById('screen-'+name);
   if (el) el.classList.add('active');
+  syncNav();
 }
 
 function openModal(id) { document.getElementById(id).style.display = 'flex'; }
@@ -2952,7 +3130,115 @@ document.querySelectorAll('.modal-overlay').forEach(ov => {
 });
 
 // ═══════════════════════════════════════════════════════
-//  INIT
+//  CHANGELOG
+// ═══════════════════════════════════════════════════════
+const CHANGELOG = [
+  {
+    version: 'v5.0 — Navigasyon',
+    date: 'Bugün',
+    type: 'design',
+    latest: true,
+    features: [
+      { icon: '📱', text: 'Alt navigasyon çubuğu — mobil uygulama gibi her zaman görünür' },
+      { icon: '🏠', text: 'Ana Sayfa, Profiller, Geçmiş, Rozetler, Ayarlar sekmeleri' },
+      { icon: '🆕', text: 'Yenilikler sayfası — tüm geliştirmeleri timeline olarak gör' },
+      { icon: '⚙️', text: 'Ayarlar artık alt çubuktan tek tıkla erişilebilir' },
+    ]
+  },
+  {
+    version: 'v4.0 — Profil Detay',
+    date: 'Dün',
+    type: 'new',
+    features: [
+      { icon: '📊', text: 'Profil detay sayfası — tek profil için tüm istatistikler' },
+      { icon: '📈', text: 'Son 10 sınav başarı çizgi grafiği (SVG animasyonlu)' },
+      { icon: '🍩', text: 'Doğru/Yanlış donut (pasta) grafiği' },
+      { icon: '📅', text: 'Haftalık aktivite çubuk grafiği' },
+      { icon: '✏️', text: 'Profil düzenleme — isim ve avatar değiştirme' },
+      { icon: '🗑️', text: 'Profil silme onay penceresiyle güvenli silme' },
+      { icon: '🕒', text: 'Son sınavlar listesi konu, tarih ve skorlarıyla' },
+    ]
+  },
+  {
+    version: 'v3.0 — Büyük Güncelleme',
+    date: '2 gün önce',
+    type: 'new',
+    features: [
+      { icon: '👤', text: 'Çoklu kullanıcı profilleri — her biri ayrı istatistik tutar' },
+      { icon: '📚', text: '5 konu: Çarpım, Toplama, Çıkarma, Bölme, Kesirler' },
+      { icon: '🔢', text: 'Kesirler — görsel kesir gösterimi, toplama/çıkarma/karşılaştırma' },
+      { icon: '🎯', text: '4 zorluk seviyesi: Kolay, Orta, Zor, Uzman' },
+      { icon: '🔢', text: 'Belirli sayıda soru modu (10/20/30/50/Sınırsız)' },
+      { icon: '🔥', text: 'Streak (seri) takibi ve ateş animasyonu' },
+      { icon: '🏆', text: '13 rozet — İlk Sınav\'dan Süpernova\'ya' },
+      { icon: '📊', text: 'İstatistik ekranı — konu bazlı başarı ve zayıf noktalar' },
+      { icon: '🎨', text: 'Koyu/Açık tema desteği' },
+      { icon: '🔊', text: 'Ses efektleri (Web Audio API ile sentezlendi)' },
+      { icon: '🔒', text: 'Çocuk modu + Ebeveyn PIN koruması' },
+      { icon: '🔐', text: 'PIN değiştirme özelliği' },
+      { icon: '🎊', text: 'Konfeti animasyonu %90+ başarılarda' },
+    ]
+  },
+  {
+    version: 'v2.0 — Ayarlar & Geçmiş',
+    date: '3 gün önce',
+    type: 'improve',
+    features: [
+      { icon: '⚙️', text: 'Şifreli ayarlar paneli (PIN: 4156)' },
+      { icon: '⏱️', text: 'Ayarlanabilir süre limiti — varsayılan 5 saniye' },
+      { icon: '📋', text: 'Sınav geçmişi — tüm sonuçlar tarih ve saatiyle kaydedilir' },
+      { icon: '🏷️', text: 'Uygulama adı ve alt yazı özelleştirme' },
+      { icon: '🔄', text: 'Ayarlar localStorage\'da kalıcı olarak saklanır' },
+    ]
+  },
+  {
+    version: 'v1.0 — İlk Sürüm',
+    date: '4 gün önce',
+    type: 'new',
+    features: [
+      { icon: '✖️', text: 'Sınırsız çarpım tablosu soruları (2–12 arası)' },
+      { icon: '🎯', text: '4 şıklı çoktan seçmeli format' },
+      { icon: '📊', text: 'Anlık doğru/yanlış sayacı ve başarı yüzdesi' },
+      { icon: '🏁', text: 'Sınavı bitir → sonuç özeti ve yanlış listesi' },
+      { icon: '💾', text: 'Tek HTML dosyası — indirip çalıştır' },
+    ]
+  },
+];
+
+function renderChangelog() {
+  const container = document.getElementById('changelog-list');
+  container.innerHTML = `<div class="timeline">` + CHANGELOG.map((entry, idx) => {
+    const dotColors = { new: 'var(--green)', improve: 'var(--blue)', fix: 'var(--gold)', design: 'var(--purple)' };
+    const color = dotColors[entry.type] || 'var(--blue)';
+    return `
+      <div class="tl-item">
+        <div class="tl-dot" style="background:${color}"></div>
+        <div class="tl-card">
+          ${entry.latest ? `<div class="tl-latest-tag">✨ Son Güncelleme</div>` : ''}
+          <div class="tl-header">
+            <div class="tl-version">${entry.version}</div>
+            <div class="tl-date">${entry.date}</div>
+          </div>
+          <div class="tl-badge ${entry.type}">${
+            entry.type === 'new' ? '🆕 Yeni Özellik' :
+            entry.type === 'improve' ? '⚡ Geliştirme' :
+            entry.type === 'fix' ? '🔧 Düzeltme' : '🎨 Tasarım'
+          }</div>
+          <ul class="tl-features">
+            ${entry.features.map(f => `
+              <li class="tl-feature">
+                <span class="tl-feature-icon">${f.icon}</span>
+                <span>${f.text}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      </div>
+    `;
+  }).join('') + `</div>`;
+}
+
+// ═══════════════════════════════════════════════════════
 // ═══════════════════════════════════════════════════════
 function init() {
   loadCfg();
@@ -2964,6 +3250,10 @@ function init() {
     saveProfiles(profiles);
     renderProfiles();
   }
+
+  // Show nav and set active tab
+  updateNavActive('profiles');
+  syncNav();
 }
 
 init();
